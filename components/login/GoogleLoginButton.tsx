@@ -9,9 +9,10 @@ import { useState } from "react"
 const GoogleLoginButton = () => {
   const [isClicked, setIsClicked] = useState<Boolean>(false)
 
-  const buttonClick = () => {
+  const buttonClick = async () => {
     setIsClicked(true)
-    signIn("google")
+    await signIn("google")
+    setIsClicked(false)
   }
   return (
     <Button variant="outline" size="lg" className="flex flex-row space-x-2 justify-start items-center w-full" onClick={buttonClick}>
