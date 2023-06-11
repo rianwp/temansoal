@@ -13,7 +13,7 @@ const Login = () => {
         <div className="flex-col justify-center items-center space-y-4">
           <LoginHeader/>
           <GoogleLoginButton/>
-          <FacebookLoginButton/>
+          {/* <FacebookLoginButton/> */}
         </div>
       </div>
     </div>
