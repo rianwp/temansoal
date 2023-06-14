@@ -29,7 +29,9 @@ const Navbar = () => {
           <NavItem onTop={isScrollPositionOnTop} href="/">Kumpulan Soal</NavItem>
         </div>
       </div>
-      <LoginButton/>
+      <div className="hidden md:block">
+        <LoginButton/>
+      </div>
       <div className="md:hidden block">
         <Menubar>
           <MenubarMenu>
