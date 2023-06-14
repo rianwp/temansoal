@@ -17,7 +17,9 @@ const RootLayout = ({children}: RootLayoutProps) => {
   return (
     <Provider>
       <html lang="en">
-        <body className={`${font.className}`}>{children}</body>
+        <body className={`${font.className}`}>
+          {children}
+        </body>
       </html>
     </Provider>
   )

@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react"
 import { useState } from "react"
 
 const GoogleLoginButton = () => {
-  const [isClicked, setIsClicked] = useState<Boolean>(false)
+  const [isClicked, setIsClicked] = useState<boolean>(false)
 
   const buttonClick = async () => {
     setIsClicked(true)

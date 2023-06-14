@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
  
+.hero-responsive{
+  @apply lg:h-[700px] md:h-[600px] h-[500px];
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

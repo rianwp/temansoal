@@ -7,7 +7,7 @@ import { useState } from "react"
 import { Loader2 } from "lucide-react"
 
 const FacebookLoginButton = () => {
-  const [isClicked, setIsClicked] = useState<Boolean>(false)
+  const [isClicked, setIsClicked] = useState<boolean>(false)
 
   const buttonClick = async () => {
     setIsClicked(true)
