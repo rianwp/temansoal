@@ -14,7 +14,7 @@ const NavbarLogo = ({onTop}: NavbarLogoProps) => {
         :
         <Image src="/logo.png" alt="Logo" width={32} height={24}/>
       }
-      <p className={`${textStyle} font-medium`}>Teman Soal</p>
+      <p className={`${textStyle} font-medium text-sm`}>Teman Soal</p>
     </Link>
   )
 }
