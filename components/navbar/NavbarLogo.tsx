@@ -6,7 +6,7 @@ interface NavbarLogoProps {
 }
 
 const NavbarLogo = ({onTop}: NavbarLogoProps) => {
-  const textStyle = onTop ? "text-white" : "text-sky-500"
+  const textStyle = onTop ? "text-white" : "text-sky-600"
   return (
     <Link href="/" className="flex flex-row justify-between items-center space-x-2">
       {onTop ?
@@ -14,7 +14,7 @@ const NavbarLogo = ({onTop}: NavbarLogoProps) => {
         :
         <Image src="/logo.png" alt="Logo" width={32} height={24}/>
       }
-      <p className={`${textStyle} font-medium text-sm`}>Teman Soal</p>
+      <p className={`${textStyle} font-medium text-base`}>Teman Soal</p>
     </Link>
   )
 }

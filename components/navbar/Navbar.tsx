@@ -6,10 +6,8 @@ import NavbarLogo from "./NavbarLogo"
 import NavItem from "./NavItem"
 import Link from "next/link"
 import MenuButton from "./MenuButton"
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "../ui/menubar"
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "../ui/menubar"
 import LoginButton from "./LoginButton"
-
-
 
 const Navbar = () => {
   const [isScrollPositionOnTop, setIsScrollPositionOnTop] = useState<boolean>(true)
@@ -24,14 +22,14 @@ const Navbar = () => {
   const navBg = isScrollPositionOnTop ? "bg-transparent" : "bg-white"
   return (
     <div className={`${navBg} w-full inset-x-0 fixed top-0 flex justify-between items-center z-10 p-3 lg:px-10 h-16 transition duration-300`}>
-      <div>
+      <div className="flex flex-row space-x-4">
         <NavbarLogo onTop={isScrollPositionOnTop}/>
+        <div className="hidden md:flex flex-row">
+          <NavItem onTop={isScrollPositionOnTop} href="/generatesoal">Buat Soal</NavItem>
+          <NavItem onTop={isScrollPositionOnTop} href="/">Kumpulan Soal</NavItem>
+        </div>
       </div>
-      <div className="hidden md:block space-x-2">
-        <NavItem onTop={isScrollPositionOnTop} href="/generatesoal">Generate Soal</NavItem>
-        <NavItem onTop={isScrollPositionOnTop} href="/">Soal Tersimpan</NavItem>
-        <LoginButton/>
-      </div>
+      <LoginButton/>
       <div className="md:hidden block">
         <Menubar>
           <MenubarMenu>
@@ -44,6 +42,10 @@ const Navbar = () => {
               </MenubarItem>
               <MenubarItem>
                 <Link href="/">Soal Tersimpan</Link>
+              </MenubarItem>
+              <MenubarSeparator/>
+              <MenubarItem>
+                <Link href="/">Login</Link>
               </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
