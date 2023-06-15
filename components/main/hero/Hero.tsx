@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import HeroMainButton from "./HeroMainButton"
 import HeroText from "./HeroText"
 
 const Hero = () => {
@@ -7,7 +7,7 @@ const Hero = () => {
       <div className="w-1/2">
         <HeroText/>
         <div className="flex flex-row mt-10">
-          <Button size="lg">Coba Sekarang</Button>
+          <HeroMainButton/>
         </div>
       </div>
     </div>

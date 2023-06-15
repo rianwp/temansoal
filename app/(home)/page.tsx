@@ -1,6 +1,6 @@
 import Hero from "@/components/main/hero/Hero"
 
-const Home = () => {
+const HomePage = () => {
   return (
     <>
       <Hero/>
@@ -9,4 +9,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

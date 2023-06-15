@@ -7,7 +7,7 @@ interface LayoutProps {
 const Layout = ({children}: LayoutProps) => {
   return (
     <>
-      <Navbar isHome={false}/>
+      <Navbar isHome={true}/>
       <div className="pt-16">
         {children}
       </div>

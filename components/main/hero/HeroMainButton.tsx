@@ -1,22 +1,22 @@
 "use client"
 
+import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 
-const HeroText = () => {
+const HeroMainButton = () => {
   const animate = {
     initial: { opacity: 0, y: -20},
     in: { opacity: 1, y: 0}
   }
   return (
-    <motion.h1
+    <motion.div
       variants={animate}
       initial="initial"
       animate="in"
-      className="text-white text-6xl font-bold leading-relaxed"
     >
-      Membuat Soal, Jadi Lebih Mudah dengan Menggunakan AI
-    </motion.h1>
+      <Button size="lg">Coba Sekarang</Button>
+    </motion.div>
   )
 }
 
-export default HeroText
+export default HeroMainButton
