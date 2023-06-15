@@ -22,8 +22,8 @@ const FormTingkatKesulitan = () => {
           <MenubarSub>
             <MenubarSubTrigger>SD</MenubarSubTrigger>
             <MenubarSubContent>
-              {sd.map((item) => (
-                <MenubarItem onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
+              {sd.map((item, index) => (
+                <MenubarItem key={index} onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
               ))}
             </MenubarSubContent>
           </MenubarSub>
@@ -32,8 +32,8 @@ const FormTingkatKesulitan = () => {
           <MenubarSub>
             <MenubarSubTrigger>SMP</MenubarSubTrigger>
             <MenubarSubContent>
-              {smp.map((item) => (
-                <MenubarItem onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
+              {smp.map((item, index) => (
+                <MenubarItem key={index} onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
               ))}
             </MenubarSubContent>
           </MenubarSub>
@@ -42,8 +42,8 @@ const FormTingkatKesulitan = () => {
           <MenubarSub>
             <MenubarSubTrigger>SMA</MenubarSubTrigger>
             <MenubarSubContent>
-              {sma.map((item) => (
-                <MenubarItem onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
+              {sma.map((item, index) => (
+                <MenubarItem key={index} onSelect={() => setValue(item.value)}>{item.label}</MenubarItem>
               ))}
             </MenubarSubContent>
           </MenubarSub>
