@@ -11,8 +11,8 @@ const FormJenisSoal = () => {
         <SelectValue placeholder={value} />
       </SelectTrigger>
       <SelectContent>
-        {jenisSoal.map((item) => (
-          <SelectItem value={item}>{item}</SelectItem>
+        {jenisSoal.map((item, index) => (
+          <SelectItem key={index} value={item}>{item}</SelectItem>
         ))}
       </SelectContent>
     </Select>
