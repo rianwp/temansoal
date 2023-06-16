@@ -1,10 +1,7 @@
-import jawaban from "./jawaban";
-import pilihan from "./pilihan";
-
 type soal = {
   soal: string,
-  jawaban: jawaban | string,
-  pilihan? : pilihan,
+  jawaban: string,
+  pilihan? : string[],
   pembahasan: string
 }
 
