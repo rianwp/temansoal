@@ -13,7 +13,7 @@ export const POST = async (req: Request) => {
   const mapelPrompt = `untuk pelajaran ${mapel},`
   const tingkatKesulitanPrompt = `untuk ${tingkatKesulitan},`
   const topikPrompt = `dengan topik terkait: ${topik}`
-  const jawabanPrompt = `gunakan format json ${haveOptions ? `{soal:"soal", pilihan:[(a,b,c,d,e)], jawaban:{(a,b,c,d,e)}, pembahasan: "pembahasan"` : `{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan"}`}.`
+  const jawabanPrompt = `gunakan format json ${haveOptions ? `{soal:"soal", pilihan:[(a,b,c,d,e dalam huruf kapital)], jawaban:{(a,b,c,d,e dalam huruf kapital dan deskripsi)}, pembahasan: "pembahasan"` : `{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan"}`}.`
   const aturanPrompt = `Jangan tambahkan awalan angka pada setiap soal. Jika terdapat soal cerita yang berhubungan, tuliskan cerita pada setiap soal. Soal cerita minimal 1 paragraf. Berikan soal singkat untuk matematika.`
   const bahasaPrompt = `Gunakan referensi kurikulum di Indonesia.`
   const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan bentuk json. Ikuti format ini tanpa penyimpangan.`
