@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
-      n: 1
+      n: 3
     })
 
     const stream = OpenAIStream(res)
