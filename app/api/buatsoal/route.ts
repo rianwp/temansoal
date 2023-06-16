@@ -35,14 +35,15 @@ export const POST = async (req: Request) => {
       presence_penalty: 0,
       n: 1
     })
-    const stream = await OpenAIStreamMine(res)
-    // const stream = OpenAIStream(res)
-    // return new StreamingTextResponse(stream, {
-    //   status: 200
-    // })
-    return new Response(stream, {
+    
+    const stream = OpenAIStream(res)
+    return new StreamingTextResponse(stream, {
       status: 200
     })
+    // const stream = await OpenAIStreamMine(res)
+    // return new Response(stream, {
+    //   status: 200
+    // })
   } catch(error) {
     console.log(error)
     return new Response("Terjadi Kesalahan", {
