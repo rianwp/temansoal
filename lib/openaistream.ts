@@ -4,7 +4,8 @@ export async function OpenAIStreamMine(res: Response) {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
-
+  let counter = 0;
+  
   const stream = new ReadableStream({
     async start(controller) {
       // callback
@@ -19,8 +20,13 @@ export async function OpenAIStreamMine(res: Response) {
           try {
             const json = JSON.parse(data);
             const text = json.choices[0].delta?.content || '';
+            if (counter < 2 && (text.match(/\n/) || []).length) {
+              // this is a prefix character (i.e., "\n\n"), do nothing
+              return;
+            }
             const queue = encoder.encode(text);
             controller.enqueue(queue);
+            counter++;
           } catch (e) {
             // maybe parse error
             controller.error(e);

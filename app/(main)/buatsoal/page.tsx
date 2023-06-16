@@ -25,7 +25,7 @@ const BuatSoalPage = () => {
     setIsGenerateSoalClicked(true)
     const data = {
       mapel,
-      jumlahSoal: jumlahSoal[0],
+      jumlahSoal: 1,
       haveOptions,
       tingkatKesulitan,
       topik
@@ -33,27 +33,31 @@ const BuatSoalPage = () => {
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const res = await fetch(`/api/buatsoal`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data)
-        })
-        
-        const json: soal[] = await res.json()
-        if(res.status === 200){
-          setSoal(json)
-          setIsGenerateSoalClicked(false)
-          setIsGenarting(false)
-        } else{
-          setIsGenarting(false)
-          toast({
-            variant: "destructive",
-            title: "Terjadi Kesalahan",
-            description: "Terdapat masalah pada server",
+        const array: soal[] = []
+        for (const jumlah of [...Array(jumlahSoal[0])]){
+          const res = await fetch(`/api/buatsoal`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
           })
+          
+          const json: soal = await res.json()
+          if(res.status === 200){
+            array.push(json)
+          } else{
+            setIsGenarting(false)
+            toast({
+              variant: "destructive",
+              title: "Terjadi Kesalahan",
+              description: "Terdapat masalah pada server",
+            })
+          }
         }
+        setSoal(array)
+        setIsGenerateSoalClicked(false)
+        setIsGenarting(false)
       }
       catch (error) {
         console.log(error)
