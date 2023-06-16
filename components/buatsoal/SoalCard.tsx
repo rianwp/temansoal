@@ -5,7 +5,7 @@ interface SoalCardProps {
   pilihan?: string[],
   jawaban: string,
   urutan: number,
-  pembahasan: string
+  pembahasan?: string
 }
 
 const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) => {

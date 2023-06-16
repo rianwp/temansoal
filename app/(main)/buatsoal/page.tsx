@@ -92,7 +92,7 @@ const BuatSoalPage = () => {
               jawaban={item.jawaban}
               soal={item.soal}
               urutan={index+1}
-              pembahasan={item.pembahasan}
+              // pembahasan={item.pembahasan}
             />
           ))
         }
