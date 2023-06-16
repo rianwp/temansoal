@@ -24,9 +24,9 @@ const Navbar = ({isHome}: NavbarProps) => {
       setIsScrollPositionOnTop(false)
     }
   })
-  const navBg = isHome ? (isScrollPositionOnTop ? "bg-transparent" : "bg-white") : "bg-white"
+  const navBg = isHome ? (isScrollPositionOnTop ? "bg-transparent" : "bg-secondary border-b border-gray-200") : "bg-secondary border-b border-gray-200"
   return (
-    <div className={`${navBg} w-full inset-x-0 fixed top-0 flex justify-between items-center z-10 p-3 lg:px-10 h-16 transition duration-300`}>
+    <div className={`${navBg} w-full inset-x-0 fixed top-0 flex justify-between items-center z-10 p-4 lg:px-10 h-16 transition duration-300`}>
       <div className="flex flex-row space-x-4">
         <NavbarLogo onTop={isHome ? isScrollPositionOnTop : false}/>
         <div className="hidden md:flex flex-row">
@@ -45,14 +45,14 @@ const Navbar = ({isHome}: NavbarProps) => {
             </MenubarTrigger>
             <MenubarContent>
               <MenubarItem>
-                <Link href="/generatesoal">Generate Soal</Link>
+                <Link href="/buatsoal">Buat Soal</Link>
               </MenubarItem>
               <MenubarItem>
-                <Link href="/">Soal Tersimpan</Link>
+                <Link href="/koleksisoal">Koleksi Soal</Link>
               </MenubarItem>
               <Separator/>
               <MenubarItem>
-                <Link href="/">Login</Link>
+                <Link href="/login">Login</Link>
               </MenubarItem>
             </MenubarContent>
           </MenubarMenu>

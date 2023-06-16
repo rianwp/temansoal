@@ -11,7 +11,7 @@ const FormTopik = () => {
     return ` ${topik}`
   })
   return (
-    <Textarea value={value} className="w-full h-24" placeholder={`${topik ? `Topik seperti: ${topik}` : "Seperti: kata kunci, bab, materi, dll"}`} onChange={(e) => setValue(e.target.value)}/>
+    <Textarea value={value} className="w-full h-20" placeholder={`${topik ? `Topik seperti: ${topik}` : "Seperti: kata kunci, bab, materi, dll"}`} onChange={(e) => setValue(e.target.value)}/>
   )
 }
 

@@ -17,5 +17,20 @@ export const tingkatKesulitanState = atom({
 
 export const jenisSoalState = atom({
   key: "jenisSoalState",
-  default: "Pilihan Ganda", 
+  default: "Essay", 
+})
+
+export const jumlahSoalState = atom({
+  key: "jumlahSoalState",
+  default: [1], 
+})
+
+export const isGenerateSoalClickedState = atom({
+  key: "isGenerateSoalClickedState",
+  default: false, 
+})
+
+export const haveOptionsState = atom({
+  key: "haveOptionsState",
+  default: false,
 })

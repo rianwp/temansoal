@@ -5,6 +5,9 @@
 .hero-responsive{
   @apply lg:h-[700px] md:h-[600px] h-[500px];
 }
+.screen-height{
+  @apply h-[calc(100vh-4rem)];
+}
 
 @layer base {
   :root {

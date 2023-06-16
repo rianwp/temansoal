@@ -135,6 +135,6 @@ export const sd = [
 ]
 
 export const jenisSoal = [
-  "Pilihan Ganda",
-  "Essay"
+  "Essay",
+  "Pilihan Ganda"
 ]

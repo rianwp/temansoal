@@ -1,6 +1,4 @@
-"use client"
-
-import { jenisSoalState, mataPelajaranState, tingkatKesulitanState, topikState } from "@/lib/state"
+import { isGenerateSoalClickedState, mataPelajaranState } from "@/lib/state"
 import FormMataPelajaran from "./FormMataPelajaran"
 import LimitBar from "./LimitBar"
 import { useRecoilValue } from "recoil"
@@ -8,26 +6,18 @@ import FormTopik from "./FormTopik"
 import FormTingkatKesulitan from "./FormTingkatKesulitan"
 import FormJenisSoal from "./FormJenisSoal"
 import { Button } from "../ui/button"
+import FormJumlahSoal from "./FormJumlahSoal"
 
-const FilterForm = () => {
+interface FilterFormProps {
+  onClick: () => void
+}
+
+const FilterForm = ({onClick}: FilterFormProps) => {
   const mapel = useRecoilValue<string>(mataPelajaranState)
-  const topik = useRecoilValue<string>(topikState)
-  const jenisSoal = useRecoilValue<string>(jenisSoalState)
-  const tingkatKesulitan = useRecoilValue<string>(tingkatKesulitanState)
-
-  const generateSoal = async () => {
-    const dataSoal = {
-      mapel,
-      topik,
-      jenisSoal,
-      tingkatKesulitan,
-    }
-    //nambahin api
-  }
-  
+  const isGenerateSoalClicked = useRecoilValue<boolean>(isGenerateSoalClickedState)
   return (
-    <div className="flex flex-col space-y-4 items-start w-[300px] p-2">
-      <h1 className="text-lg text-black font-bold">Filter Soal</h1>
+    <div className="flex flex-col space-y-4 items-start md:w-[350px] w-full p-4">
+      <h1 className="text-lg font-bold">Filter Soal</h1>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Limit Penggunaan</p>
         <LimitBar limit={15} current={1}/>
@@ -35,6 +25,11 @@ const FilterForm = () => {
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Mata Pelajaran</p>
         <FormMataPelajaran/>
+        {(isGenerateSoalClicked && mapel === "") ?
+          <p className="text-red-600">Mapel Tidak Boleh Kosong</p>
+          :
+          null
+        }
       </div>
       <div className="flex flex-row w-full">
         <div className="flex flex-col space-y-2 w-1/2 pr-4">
@@ -50,7 +45,11 @@ const FilterForm = () => {
         <p className="text-sm font-medium">Topik</p>
         <FormTopik/>
       </div>
-      <Button onClick={generateSoal} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
+      <div className="flex flex-col space-y-2 w-full">
+        <p className="text-sm font-medium">Jumlah Soal</p>
+        <FormJumlahSoal/>
+      </div>
+      <Button onClick={onClick} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
     </div>
   )
 }
