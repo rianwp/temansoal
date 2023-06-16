@@ -1,3 +1,4 @@
+import { OpenAIStreamMine } from "@/lib/openaistream"
 import { openai } from "@/services/openai"
 import generateQuestionForm from "@/types/generateQuestionForm"
 import { OpenAIStream, StreamingTextResponse } from "ai"
@@ -32,14 +33,16 @@ export const POST = async (req: Request) => {
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
-      n: 3
+      n: 1
     })
-
-    const stream = OpenAIStream(res)
-    return new StreamingTextResponse(stream, {
+    const stream = await OpenAIStreamMine(res)
+    // const stream = OpenAIStream(res)
+    // return new StreamingTextResponse(stream, {
+    //   status: 200
+    // })
+    return new Response(stream, {
       status: 200
     })
-
   } catch(error) {
     console.log(error)
     return new Response("Terjadi Kesalahan", {
