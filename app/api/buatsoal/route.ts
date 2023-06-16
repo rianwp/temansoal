@@ -29,7 +29,7 @@ export const POST = async (req: Request) => {
       }],
       stream: true,
       temperature,
-      max_tokens: 3500,
+      max_tokens: 1000,
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
