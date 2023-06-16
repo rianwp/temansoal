@@ -24,7 +24,7 @@ const Navbar = ({isHome}: NavbarProps) => {
       setIsScrollPositionOnTop(false)
     }
   })
-  const navBg = isHome ? (isScrollPositionOnTop ? "bg-transparent" : "bg-secondary border-b border-gray-200") : "bg-secondary border-b border-gray-200"
+  const navBg = isHome ? (isScrollPositionOnTop ? "bg-transparent" : "bg-white border-b border-gray-200") : "bg-white border-b border-gray-200"
   return (
     <div className={`${navBg} w-full inset-x-0 fixed top-0 flex justify-between items-center z-10 p-4 lg:px-10 h-16 transition duration-300`}>
       <div className="flex flex-row space-x-4">

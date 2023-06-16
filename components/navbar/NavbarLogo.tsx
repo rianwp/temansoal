@@ -6,7 +6,7 @@ interface NavbarLogoProps {
 }
 
 const NavbarLogo = ({onTop}: NavbarLogoProps) => {
-  const textStyle = onTop ? "text-secondary" : "text-sky-600"
+  const textStyle = onTop ? "text-white" : "text-sky-600"
   return (
     <Link href="/" className="flex flex-row justify-between items-center space-x-2">
       {onTop ?

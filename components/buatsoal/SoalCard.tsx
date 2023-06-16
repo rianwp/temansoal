@@ -30,7 +30,7 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
           :
           null
         }
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col">
           {typeof jawaban === "string" ?
             <div className="flex flex-row items-start space-x-2">
               <p className="font-normal text-base">Jawaban: </p>

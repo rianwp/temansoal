@@ -12,7 +12,7 @@ const HeroText = () => {
       variants={animate}
       initial="initial"
       animate="in"
-      className="text-secondary text-6xl font-bold leading-relaxed"
+      className="text-white text-6xl font-bold leading-relaxed"
     >
       Membuat Soal, Jadi Lebih Mudah dengan Menggunakan AI
     </motion.h1>
