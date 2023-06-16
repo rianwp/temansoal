@@ -6,8 +6,6 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not defined")
 }
 
-export const runtime = "edge"
-
 export const POST = async (req: Request) => {
   const { mapel, tingkatKesulitan, haveOptions = false, topik = "", jumlahSoal = 1 } = (await req.json()) as generateQuestionForm 
   const jumlahSoalPrompt = `berikan ${jumlahSoal} soal ujian`
@@ -36,7 +34,7 @@ export const POST = async (req: Request) => {
       presence_penalty: 0,
       n: 1
     })
-    
+
     const stream = OpenAIStream(res)
     return new StreamingTextResponse(stream, {
       status: 200
