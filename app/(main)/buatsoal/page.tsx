@@ -33,19 +33,31 @@ const BuatSoalPage = () => {
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/buatsoal`, {
+        const res = await fetch(`/api/buatsoal`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(data)
         })
         
         const json: soal[] = await res.json()
-        if(res.ok){
+        if(res.status === 200){
           setSoal(json)
           setIsGenerateSoalClicked(false)
           setIsGenarting(false)
+        } else{
+          setIsGenarting(false)
+          toast({
+            variant: "destructive",
+            title: "Terjadi Kesalahan",
+            description: "Terdapat masalah pada server",
+          })
         }
       }
       catch (error) {
+        console.log(error)
+        setIsGenarting(false)
         toast({
           variant: "destructive",
           title: "Terjadi Kesalahan",
@@ -64,7 +76,7 @@ const BuatSoalPage = () => {
         </div>
         <Separator className="screen-height md:block hidden" orientation="vertical"/>
       </div>
-      <div className="w-full p-4 md:ml-[350px]">
+      <div className="w-full p-4 md:ml-[350px] flex flex-col space-y-2">
         {isGenerating ?
           [...Array(jumlahSoal[0])].map((item, index) => (
             <SoalCardSkeleton key={index}/>

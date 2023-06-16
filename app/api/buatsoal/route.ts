@@ -15,7 +15,7 @@ export const POST = async (req: Request) => {
   const jawabanPrompt = `gunakan format json ${haveOptions ? `[{soal:"soal", pilihan:[{huruf: (a,b,c,d,e), deskripsi: "deskripsi"], jawaban:{huruf: (a,b,c,d,e), deskripsi: "deskripsi"}, pembahasan: "pembahasan"]` : `[{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan"}]`}.`
   const aturanPrompt = `Jangan tambahkan awalan angka pada setiap soal. Jika terdapat soal cerita yang berhubungan, tuliskan cerita pada setiap soal. Soal cerita minimal 2 paragraf.`
   const bahasaPrompt = `Gunakan referensi kurikulum di Indonesia.`
-  const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan format json. Ikuti format ini tanpa penyimpangan.`
+  const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan bentuk json. Ikuti format ini tanpa penyimpangan.`
   const prompt = `${jumlahSoalPrompt} ${mapelPrompt} ${tingkatKesulitanPrompt} ${topikPrompt} ${jawabanPrompt} ${aturanPrompt} ${bahasaPrompt} ${jsonPrompt}`
 
   const temperature = mapel.toLowerCase() === "matematika" ? 0.7 : 0.4
@@ -83,6 +83,7 @@ export const POST = async (req: Request) => {
       status: 200,
     })
   } catch(error) {
+    console.log(error)
     return new Response("Terjadi Kesalahan", {
       status: 500,
     })

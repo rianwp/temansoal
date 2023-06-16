@@ -14,12 +14,12 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
   return (
     <Card className="w-full p-4">
       <h2 className="flex flex-row items-center">
-        <div className="bg-primary text-sm text-secondary rounded-full flex justify-center items-center h-5 w-5">{urutan}</div>
+        <div className="bg-primary text-sm text-secondary rounded-full flex justify-center items-center h-5 w-5 shrink-0">{urutan}</div>
         <p className="ml-1 text-base font-semibold">{soal}</p>
       </h2>
       <div className="pl-6 w-full">
         {pilihan ?
-          <div className="flex flex-col space-x-1">
+          <div className="flex flex-col space-y-1">
             {pilihan.map((item, index) => (
               <p key={index} className="flex flex-row text-base">
                 <p className="font-medium">{item.huruf}. </p>
