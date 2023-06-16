@@ -16,7 +16,7 @@ export const POST = async (req: Request) => {
   const jawabanPrompt = `gunakan format json ${haveOptions ? `{soal:"soal", pilihan:[(a,b,c,d,e dalam huruf kapital)], jawaban:{(a,b,c,d,e dalam huruf kapital dan tanpa keterangan)}, pembahasan: "pembahasan singkat"` : `{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan singkat"}`}.`
   const aturanPrompt = `Jangan tambahkan awalan angka pada setiap soal. Jika terdapat soal cerita yang berhubungan, tuliskan cerita pada setiap soal. Soal cerita minimal 1 paragraf. Berikan soal singkat untuk matematika.`
   const bahasaPrompt = `Gunakan referensi kurikulum di Indonesia.`
-  const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan bentuk json. Ikuti format ini tanpa penyimpangan.`
+  const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan bentuk json. Ikuti format ini tanpa penyimpangan. Respon dalam 9 detik`
   const prompt = `${jumlahSoalPrompt} ${mapelPrompt} ${tingkatKesulitanPrompt} ${topikPrompt} ${jawabanPrompt} ${aturanPrompt} ${bahasaPrompt} ${jsonPrompt}`
 
   const temperature = mapel.toLowerCase() === "matematika" ? 0.5 : 0.4
