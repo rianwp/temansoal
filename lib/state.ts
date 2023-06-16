@@ -34,3 +34,8 @@ export const haveOptionsState = atom({
   key: "haveOptionsState",
   default: false,
 })
+
+export const isFormValidState = atom({
+  key: "isFormValidState",
+  default: false,
+})

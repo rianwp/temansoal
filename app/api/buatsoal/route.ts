@@ -1,6 +1,6 @@
 import { openai } from "@/services/openai"
 import generateQuestionForm from "@/types/generateQuestionForm"
-import { NextResponse } from "next/server"
+import { ParsedEvent, ReconnectInterval, createParser } from "eventsource-parser"
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not defined")
@@ -18,20 +18,73 @@ export const POST = async (req: Request) => {
   const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan format json. Ikuti format ini tanpa penyimpangan.`
   const prompt = `${jumlahSoalPrompt} ${mapelPrompt} ${tingkatKesulitanPrompt} ${topikPrompt} ${jawabanPrompt} ${aturanPrompt} ${bahasaPrompt} ${jsonPrompt}`
 
-  const temperature = mapel.toLowerCase() === "matematika" ? 0.8 : 0.4
+  const temperature = mapel.toLowerCase() === "matematika" ? 0.7 : 0.4
 
-  const completion = await openai.createCompletion({
-    model: "gpt-3.5-turbo",
-    prompt,
-    stream: true,
-    temperature,
-    max_tokens: 3500,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    n: 1
-  },
-  { responseType: "stream"}
-  )
+  try {
+    const payload = {
+      model: "gpt-3.5-turbo",
+      messages: [{
+        role: "user", content: prompt
+      }],
+      stream: true,
+      temperature,
+      max_tokens: 3500,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+      n: 1
+    }
 
-  return new NextResponse(JSON.stringify(completion.data))
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
+      },
+      method: "POST",
+      body: JSON.stringify(payload),
+    })
+
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+
+    let counter = 0;
+
+    const stream = new ReadableStream({
+      async start(controller) {
+        function onParse(event: ParsedEvent | ReconnectInterval) {
+          if (event.type === "event") {
+            const data = event.data
+            if (data === "[DONE]") {
+              controller.close()
+              return
+            }
+            try {
+              const json = JSON.parse(data)
+              const text = json.choices[0].delta?.content || ""
+              if (counter < 2 && (text.match(/\n/) || []).length) {
+                return
+              }
+              const queue = encoder.encode(text);
+              controller.enqueue(queue);
+              counter++;
+              
+            } catch (e) {
+              controller.error(e)
+            }
+          }
+        }
+        const parser = createParser(onParse)
+        for await (const chunk of res.body as any) {
+          parser.feed(decoder.decode(chunk))
+        }
+      },
+    })
+    return new Response(stream, {
+      status: 200,
+    })
+  } catch(error) {
+    return new Response("Terjadi Kesalahan", {
+      status: 500,
+    })
+  }
 }

@@ -26,7 +26,7 @@ const FilterForm = ({onClick}: FilterFormProps) => {
         <p className="text-sm font-medium">Mata Pelajaran</p>
         <FormMataPelajaran/>
         {(isGenerateSoalClicked && mapel === "") ?
-          <p className="text-red-600">Mapel Tidak Boleh Kosong</p>
+          <p className="text-red-600 text-sm">Mapel Tidak Boleh Kosong</p>
           :
           null
         }

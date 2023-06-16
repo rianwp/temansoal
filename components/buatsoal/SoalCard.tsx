@@ -4,7 +4,7 @@ import jawaban from "@/types/jawaban"
 
 interface SoalCardProps {
   soal: string,
-  pilihan?: pilihan,
+  pilihan?: pilihan[],
   jawaban: string | jawaban,
   urutan: number,
   pembahasan: string

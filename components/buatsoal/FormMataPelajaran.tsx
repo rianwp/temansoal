@@ -55,15 +55,15 @@ const FormMataPelajaran = () => {
             <Button variant="ghost" className="h-full w-full" onClick={() => setOpen(false)}>Mata Pelajaran {value} tidak ada dalam daftar, tetap cari?</Button>
           </CommandEmpty>
           <CommandGroup className="h-40 overflow-y-scroll">
-            {mataPelajaran.sort().map((mapel) => (
+            {mataPelajaran.sort().map((item) => (
               <CommandItem
-                key={mapel.nama}
+                key={item.nama}
                 onSelect={(currentValue) => {
                   setValue(currentValue)
                   setOpen(false)
                 }}
               >
-                {mapel.nama}
+                {item.nama}
               </CommandItem>
             ))}
           </CommandGroup>
