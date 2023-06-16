@@ -1,10 +1,12 @@
 import { openai } from "@/services/openai"
 import generateQuestionForm from "@/types/generateQuestionForm"
-import { ParsedEvent, ReconnectInterval, createParser } from "eventsource-parser"
+import { OpenAIStream, StreamingTextResponse } from "ai"
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not defined")
 }
+
+export const runtime = "edge"
 
 export const POST = async (req: Request) => {
   const { mapel, tingkatKesulitan, haveOptions = false, topik = "", jumlahSoal = 1 } = (await req.json()) as generateQuestionForm 
@@ -21,7 +23,7 @@ export const POST = async (req: Request) => {
   const temperature = mapel.toLowerCase() === "matematika" ? 0.7 : 0.4
 
   try {
-    const payload = {
+    const res = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [{
         role: "user", content: prompt
@@ -33,55 +35,13 @@ export const POST = async (req: Request) => {
       frequency_penalty: 0,
       presence_penalty: 0,
       n: 1
-    }
-
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY ?? ""}`,
-      },
-      method: "POST",
-      body: JSON.stringify(payload),
+    })
+    
+    const stream = OpenAIStream(res)
+    return new StreamingTextResponse(stream, {
+      status: 200
     })
 
-    const encoder = new TextEncoder()
-    const decoder = new TextDecoder()
-
-    let counter = 0;
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        function onParse(event: ParsedEvent | ReconnectInterval) {
-          if (event.type === "event") {
-            const data = event.data
-            if (data === "[DONE]") {
-              controller.close()
-              return
-            }
-            try {
-              const json = JSON.parse(data)
-              const text = json.choices[0].delta?.content || ""
-              if (counter < 2 && (text.match(/\n/) || []).length) {
-                return
-              }
-              const queue = encoder.encode(text);
-              controller.enqueue(queue);
-              counter++;
-              
-            } catch (e) {
-              controller.error(e)
-            }
-          }
-        }
-        const parser = createParser(onParse)
-        for await (const chunk of res.body as any) {
-          parser.feed(decoder.decode(chunk))
-        }
-      },
-    })
-    return new Response(stream, {
-      status: 200,
-    })
   } catch(error) {
     console.log(error)
     return new Response("Terjadi Kesalahan", {
