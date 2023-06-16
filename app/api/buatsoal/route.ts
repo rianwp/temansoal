@@ -13,13 +13,13 @@ export const POST = async (req: Request) => {
   const mapelPrompt = `untuk pelajaran ${mapel},`
   const tingkatKesulitanPrompt = `untuk ${tingkatKesulitan},`
   const topikPrompt = `dengan topik terkait: ${topik}`
-  const jawabanPrompt = `gunakan format json ${haveOptions ? `{soal:"soal", pilihan:[{huruf: (a,b,c,d,e), deskripsi: "deskripsi"], jawaban:{huruf: (a,b,c,d,e), deskripsi: "deskripsi"}, pembahasan: "pembahasan"` : `{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan"}`}.`
-  const aturanPrompt = `Jangan tambahkan awalan angka pada setiap soal. Jika terdapat soal cerita yang berhubungan, tuliskan cerita pada setiap soal. Soal cerita minimal 2 paragraf.`
+  const jawabanPrompt = `gunakan format json ${haveOptions ? `{soal:"soal", pilihan:[{huruf: (a,b,c,d,e), deskripsi: "deskripsi"], jawaban:{(a,b,c,d,e)}, pembahasan: "pembahasan"` : `{soal:"soal", jawaban:"jawaban", pembahasan: "pembahasan"}`}.`
+  const aturanPrompt = `Jangan tambahkan awalan angka pada setiap soal. Jika terdapat soal cerita yang berhubungan, tuliskan cerita pada setiap soal. Soal cerita minimal 1 paragraf.`
   const bahasaPrompt = `Gunakan referensi kurikulum di Indonesia.`
   const jsonPrompt = `Jangan tambahkan penjelasan apapun, hanya dengan bentuk json. Ikuti format ini tanpa penyimpangan.`
   const prompt = `${jumlahSoalPrompt} ${mapelPrompt} ${tingkatKesulitanPrompt} ${topikPrompt} ${jawabanPrompt} ${aturanPrompt} ${bahasaPrompt} ${jsonPrompt}`
 
-  const temperature = mapel.toLowerCase() === "matematika" ? 0.7 : 0.4
+  const temperature = mapel.toLowerCase() === "matematika" ? 0.5 : 0.4
 
   try {
     const res = await openai.createChatCompletion({
