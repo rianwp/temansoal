@@ -2,7 +2,7 @@ import { Card } from "../ui/card"
 
 interface SoalCardProps {
   soal: string,
-  pilihan?: string[],
+  pilihan?: Array<string>,
   jawaban: string,
   urutan: number,
   pembahasan?: string

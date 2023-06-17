@@ -1,7 +1,7 @@
 type soal = {
   soal: string,
   jawaban: string,
-  pilihan? : string[],
+  pilihan? : Array<string>,
   pembahasan?: string
 }
 
