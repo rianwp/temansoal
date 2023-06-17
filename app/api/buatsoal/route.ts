@@ -7,6 +7,8 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not defined")
 }
 
+export const runtime = "edge"
+
 export const POST = async (req: Request) => {
   const { mapel, tingkatKesulitan, haveOptions = false, topik = "", jumlahSoal = 1 } = (await req.json()) as generateQuestionForm 
   const jumlahSoalPrompt = `berikan ${jumlahSoal} soal ujian`

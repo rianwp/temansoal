@@ -58,6 +58,7 @@ const BuatSoalPage = () => {
         setSoal(array)
         setIsGenerateSoalClicked(false)
         setIsGenarting(false)
+        console.log(soal)
       }
       catch (error) {
         console.log(error)
@@ -90,6 +91,7 @@ const BuatSoalPage = () => {
             <SoalCard
               key={index}
               jawaban={item.jawaban}
+              pilihan={item.pilihan}
               soal={item.soal}
               urutan={index+1}
               // pembahasan={item.pembahasan}
