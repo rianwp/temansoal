@@ -32,10 +32,10 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
             <p className="font-normal text-base">Jawaban: </p>
             <p className="font-semibold text-sky-600">{jawaban}</p>
           </div>
-          <div className="flex flex-row items-start space-x-2">
+          {/* <div className="flex flex-row items-start space-x-2">
             <p className="font-normal text-base">Pembahasan: </p>
             <p className="font-semibold text-base">{pembahasan}</p>
-          </div>
+          </div> */}
         </div>
       </div>
     </Card>
