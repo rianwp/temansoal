@@ -1,9 +1,10 @@
+import pilihan from "@/types/pilihan"
 import { Card } from "../ui/card"
 
 interface SoalCardProps {
   soal: string,
-  pilihan?: Array<string>,
-  jawaban: string,
+  pilihan?: Array<pilihan>,
+  jawaban: string | pilihan,
   urutan: number,
   pembahasan?: string
 }
@@ -19,8 +20,9 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
         {pilihan ?
           <div className="flex flex-col space-y-1">
             {pilihan.map((item, index) => (
-              <p key={index} className="text-base font-medium">
-                {item}
+              <p key={index} className="flex flex-row items-center text-base">
+                <p className="font-medium">{item.huruf}. </p>
+                <p className="font-normal">{item.deskripsi}</p>
               </p>
             ))}
           </div>
@@ -30,12 +32,12 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
         <div className="flex flex-col">
           <div className="flex flex-row items-start space-x-2">
             <p className="font-normal text-base">Jawaban: </p>
-            <p className="font-semibold text-sky-600">{jawaban}</p>
+            <p className="font-semibold text-sky-600">{typeof jawaban === "string" ? jawaban : `${jawaban.huruf}. ${jawaban.deskripsi}`}</p>
           </div>
-          {/* <div className="flex flex-row items-start space-x-2">
+          <div className="flex flex-row items-start space-x-2">
             <p className="font-normal text-base">Pembahasan: </p>
-            <p className="font-semibold text-base">{pembahasan}</p>
-          </div> */}
+            <p className="font-normal text-base">{pembahasan}</p>
+          </div>
         </div>
       </div>
     </Card>

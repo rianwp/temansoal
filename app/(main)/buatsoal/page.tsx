@@ -25,7 +25,7 @@ const BuatSoalPage = () => {
     setIsGenerateSoalClicked(true)
     const data = {
       mapel,
-      jumlahSoal: 1,
+      jumlahSoal: jumlahSoal[0],
       haveOptions,
       tingkatKesulitan,
       topik
@@ -33,32 +33,27 @@ const BuatSoalPage = () => {
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const array: soal[] = []
-        for (const jumlah of [...Array(jumlahSoal[0])]){
-          const res = await fetch(`https://buatsoal-e36crbbj6a-uc.a.run.app`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
+        const res = await fetch(process.env.CLOUD_FUNCTIONS_URL || "", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
+        })
+        
+        const json: Array<soal> = await res.json()
+        if(res.status === 200){
+          setSoal(json)
+          setIsGenerateSoalClicked(false)
+          setIsGenarting(false)
+        } else{
+          setIsGenarting(false)
+          toast({
+            variant: "destructive",
+            title: "Terjadi Kesalahan",
+            description: "Terdapat masalah pada server",
           })
-          
-          const json: soal = await res.json()
-          if(res.status === 200){
-            array.push(json)
-          } else{
-            setIsGenarting(false)
-            toast({
-              variant: "destructive",
-              title: "Terjadi Kesalahan",
-              description: "Terdapat masalah pada server",
-            })
-          }
         }
-        setSoal(array)
-        setIsGenerateSoalClicked(false)
-        setIsGenarting(false)
-        console.log(soal)
       }
       catch (error) {
         console.log(error)
@@ -94,7 +89,7 @@ const BuatSoalPage = () => {
               pilihan={item.pilihan}
               soal={item.soal}
               urutan={index+1}
-              // pembahasan={item.pembahasan}
+              pembahasan={item.pembahasan}
             />
           ))
         }

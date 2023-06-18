@@ -14,6 +14,7 @@
 
 # production
 /build
+/functions
 
 # misc
 .DS_Store
@@ -29,7 +30,7 @@ yarn-error.log*
 
 # vercel
 .vercel
-/functions
+
 
 # typescript
 *.tsbuildinfo
