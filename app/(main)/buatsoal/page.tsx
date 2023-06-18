@@ -35,7 +35,7 @@ const BuatSoalPage = () => {
       try {
         const array: soal[] = []
         for (const jumlah of [...Array(jumlahSoal[0])]){
-          const res = await fetch(`/api/buatsoal`, {
+          const res = await fetch(`https://buatsoal-e36crbbj6a-uc.a.run.app`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
