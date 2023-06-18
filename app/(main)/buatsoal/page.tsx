@@ -33,11 +33,8 @@ const BuatSoalPage = () => {
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const res = await fetch(process.env.CLOUD_FUNCTIONS_URL || "", {
+        const res = await fetch("https://buatsoal-e36crbbj6a-uc.a.run.app", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(data)
         })
         
@@ -56,7 +53,6 @@ const BuatSoalPage = () => {
         }
       }
       catch (error) {
-        console.log(error)
         setIsGenarting(false)
         toast({
           variant: "destructive",
