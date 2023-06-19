@@ -1,4 +1,4 @@
-import { OpenAIStreamMine } from "@/lib/openaistream"
+import { OpenAIStreamMine } from "@/utils/openaistream"
 import { openai } from "@/services/openai"
 import generateQuestionForm from "@/types/generateQuestionForm"
 import { OpenAIStream, StreamingTextResponse } from "ai"

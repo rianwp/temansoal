@@ -6,10 +6,11 @@ interface SoalCardProps {
   pilihan?: Array<pilihan>,
   jawaban: string | pilihan,
   urutan: number,
-  pembahasan?: string
+  pembahasan?: string,
+  mapel: string
 }
 
-const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) => {
+const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardProps) => {
   return (
     <Card className="w-full p-4">
       <h2 className="flex flex-row items-start">
@@ -41,6 +42,7 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
         </div>
       </div>
     </Card>
+    //tombol menambahkan soal ke database
   )
 }
 

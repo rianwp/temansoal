@@ -3,10 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("POSTGRES_PRISMA_URL")
-  directUrl         = env("POSTGRES_URL_NON_POOLING")
-  shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Account {
@@ -46,10 +45,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // QuestionGenerated QuestionGenerated[]
-  // QuestionBank      QuestionBank[]
-  // QuestionGroup     QuestionGroup[]
-  // Transaction       Transaction[]
+  SoalTersimpan SoalTersimpan[]
+  LimitHarian   LimitHarian[]
+  Transaction   Transaction[]
 }
 
 model VerificationToken {
@@ -58,4 +56,84 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model SoalTersimpan {
+  id        String    @id @default(cuid())
+  soal      String    @db.VarChar(255)
+  a         String?   @db.VarChar(255)
+  b         String?   @db.VarChar(255)
+  c         String?   @db.VarChar(255)
+  d         String?   @db.VarChar(255)
+  e         String?   @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  userId    String    @db.VarChar(255)
+  jawaban   String    @db.Text
+  mapel     String    @db.VarChar(255)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SoalDibuat {
+  id        String    @id @default(cuid())
+  total     Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+}
+
+model LimitHarian {
+  id              String    @id @default(cuid())
+  totalHarian     Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now()) @updatedAt
+  userId          String    @db.VarChar(255)
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Package {
+  id          String        @id @default(cuid())
+  name        String        @db.VarChar(255)
+  code        String        @db.VarChar(255)
+  price       Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id           String            @id
+  amount       Int
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now()) @updatedAt
+  userId       String            @db.VarChar(255)
+  status       TransactionStatus @default(pending)
+  gross_amount Int               @db.Int
+  payment_type String            @db.VarChar(255)
+  is_active    Boolean           @default(false)
+  expired_at   DateTime?         @db.DateTime
+  packageId    String            @db.VarChar(255)
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  package      Package           @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([packageId])
+}
+
+enum TransactionStatus {
+  authorize
+  capture
+  settlement
+  deny
+  pending
+  cancel
+  refund
+  partial_refund
+  chargeback
+  partial_chargeback
+  expire
+  failure
 }

@@ -10,7 +10,7 @@ import soal from "@/types/soal"
 import { useToast } from "@/components/ui/use-toast"
 import SoalCardSkeleton from "@/components/buatsoal/SoalCardSkeleton"
 import { functions } from "@/services/firebase"
-import { HttpsCallableResult, httpsCallable } from "firebase/functions"
+import { httpsCallable } from "firebase/functions"
 
 const BuatSoalPage = () => {
   const [isGenerateSoalClicked, setIsGenerateSoalClicked] = useRecoilState<boolean>(isGenerateSoalClickedState)
@@ -40,6 +40,7 @@ const BuatSoalPage = () => {
           const res = await buatSoal(dataInput)
           const dataResult = res.data as { data: soal }
           const dataSoal: soal = dataResult.data
+          dataSoal.mapel = dataInput.mapel
           arraySoal.push(dataSoal)
         }
         setSoal(arraySoal)
@@ -79,6 +80,7 @@ const BuatSoalPage = () => {
               soal={item.soal}
               urutan={index+1}
               pembahasan={item.pembahasan}
+              mapel={item.mapel}
             />
           ))
         }
