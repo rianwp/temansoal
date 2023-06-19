@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/api/v2/buatsoal",
-        destination: "https://us-central1-temansoal.cloudfunctions.net/buatsoal",
+        destination: `${process.env.CLOUD_FUNCTIONS_URL}/buatsoal`,
       },
     ]
   },
