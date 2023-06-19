@@ -33,7 +33,11 @@ const BuatSoalPage = () => {
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const res = await fetch("https://buatsoal-e36crbbj6a-uc.a.run.app", {
+        const res = await fetch(`/api/v2/buatsoal`, {
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
           method: "POST",
           body: JSON.stringify(data)
         })
