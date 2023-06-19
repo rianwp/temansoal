@@ -9,6 +9,8 @@ import { useState } from "react"
 import soal from "@/types/soal"
 import { useToast } from "@/components/ui/use-toast"
 import SoalCardSkeleton from "@/components/buatsoal/SoalCardSkeleton"
+import { functions } from "@/services/firebase"
+import { HttpsCallableResult, httpsCallable } from "firebase/functions"
 
 const BuatSoalPage = () => {
   const [isGenerateSoalClicked, setIsGenerateSoalClicked] = useRecoilState<boolean>(isGenerateSoalClickedState)
@@ -23,45 +25,30 @@ const BuatSoalPage = () => {
 
   const generateSoal = async () => {
     setIsGenerateSoalClicked(true)
-    const data = {
-      "mapel": mapel,
-      "jumlahSoal": jumlahSoal[0],
-      "haveOptions": haveOptions,
-      "tingkatKesulitan": tingkatKesulitan,
-      "topik": topik
+    const dataInput = {
+      mapel,
+      jumlahSoal: jumlahSoal[0],
+      haveOptions,
+      tingkatKesulitan,
+      topik
     }
     if(mapel !== ""){
       setIsGenarting(true)
       try {
-        const res = await fetch(`/api/v2/buatsoal`, {
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json; charset=utf8"
-          },
-          method: "POST",
-          body: JSON.stringify(data)
-        })
-        
-        const json: Array<soal> = await res.json()
-        if(res.status === 200){
-          setSoal(json)
-          setIsGenerateSoalClicked(false)
-          setIsGenarting(false)
-        } else{
-          setIsGenarting(false)
-          toast({
-            variant: "destructive",
-            title: "Terjadi Kesalahan",
-            description: "Terdapat masalah pada server",
-          })
-        }
+        const buatSoal = httpsCallable(functions, "buatsoal")
+        const res = await buatSoal(dataInput)
+        const dataResult = res.data as { data: Array<soal> }
+        const dataSoal: Array<soal> = dataResult.data
+        setSoal(dataSoal)
+        setIsGenerateSoalClicked(false)
+        setIsGenarting(false)
       }
-      catch (error) {
+      catch (error: any) {
         setIsGenarting(false)
         toast({
           variant: "destructive",
           title: "Terjadi Kesalahan",
-          description: "Terdapat masalah pada server",
+          description: error.message,
         })
       }
       
