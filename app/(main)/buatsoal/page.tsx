@@ -24,11 +24,11 @@ const BuatSoalPage = () => {
   const generateSoal = async () => {
     setIsGenerateSoalClicked(true)
     const data = {
-      mapel,
-      jumlahSoal: jumlahSoal[0],
-      haveOptions,
-      tingkatKesulitan,
-      topik
+      "mapel": mapel,
+      "jumlahSoal": jumlahSoal[0],
+      "haveOptions": haveOptions,
+      "tingkatKesulitan": tingkatKesulitan,
+      "topik": topik
     }
     if(mapel !== ""){
       setIsGenarting(true)
@@ -36,7 +36,7 @@ const BuatSoalPage = () => {
         const res = await fetch(`/api/v2/buatsoal`, {
           mode: "no-cors",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json; charset=utf8"
           },
           method: "POST",
           body: JSON.stringify(data)
