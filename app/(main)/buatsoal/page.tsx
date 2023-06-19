@@ -27,19 +27,22 @@ const BuatSoalPage = () => {
     setIsGenerateSoalClicked(true)
     const dataInput = {
       mapel,
-      jumlahSoal: jumlahSoal[0],
       haveOptions,
       tingkatKesulitan,
       topik
     }
     if(mapel !== ""){
+      const arraySoal: Array<soal> = []
       setIsGenarting(true)
       try {
-        const buatSoal = httpsCallable(functions, "buatsoal")
-        const res = await buatSoal(dataInput)
-        const dataResult = res.data as { data: Array<soal> }
-        const dataSoal: Array<soal> = dataResult.data
-        setSoal(dataSoal)
+        for(const i in [...Array(jumlahSoal[0])]){
+          const buatSoal = httpsCallable(functions, "buatsoal")
+          const res = await buatSoal(dataInput)
+          const dataResult = res.data as { data: soal }
+          const dataSoal: soal = dataResult.data
+          arraySoal.push(dataSoal)
+        }
+        setSoal(arraySoal)
         setIsGenerateSoalClicked(false)
         setIsGenarting(false)
       }
@@ -51,7 +54,6 @@ const BuatSoalPage = () => {
           description: error.message,
         })
       }
-      
     }
   }
 
