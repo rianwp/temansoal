@@ -20,8 +20,8 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan}: SoalCardProps) =
         {pilihan ?
           <div className="flex flex-col space-y-1">
             {pilihan.map((item, index) => (
-              <p key={index} className="flex flex-row items-center text-base">
-                <p className="font-medium">{item.huruf}. </p>
+              <p key={index} className="flex flex-row items-center text-base space-x-1">
+                <p className="font-semibold">{item.huruf}.</p>
                 <p className="font-normal">{item.deskripsi}</p>
               </p>
             ))}
