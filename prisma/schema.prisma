@@ -38,9 +38,9 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String          @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?         @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -59,37 +59,37 @@ model VerificationToken {
 }
 
 model SoalTersimpan {
-  id        String    @id @default(cuid())
-  soal      String    @db.VarChar(255)
-  a         String?   @db.VarChar(255)
-  b         String?   @db.VarChar(255)
-  c         String?   @db.VarChar(255)
-  d         String?   @db.VarChar(255)
-  e         String?   @db.VarChar(255)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
-  userId    String    @db.VarChar(255)
-  jawaban   String    @db.Text
-  mapel     String    @db.VarChar(255)
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  soal      String   @db.VarChar(255)
+  a         String?  @db.VarChar(255)
+  b         String?  @db.VarChar(255)
+  c         String?  @db.VarChar(255)
+  d         String?  @db.VarChar(255)
+  e         String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  userId    String   @db.VarChar(255)
+  jawaban   String   @db.Text
+  mapel     String   @db.VarChar(255)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
 model SoalDibuat {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   total     Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model LimitHarian {
-  id              String    @id @default(cuid())
-  totalHarian     Int
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now()) @updatedAt
-  userId          String    @db.VarChar(255)
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String   @id @default(cuid())
+  totalHarian Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  userId      String   @db.VarChar(255)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -111,10 +111,10 @@ model Transaction {
   updatedAt    DateTime          @default(now()) @updatedAt
   userId       String            @db.VarChar(255)
   status       TransactionStatus @default(pending)
-  gross_amount Int               @db.Int
+  gross_amount Int
   payment_type String            @db.VarChar(255)
   is_active    Boolean           @default(false)
-  expired_at   DateTime?         @db.DateTime
+  expired_at   DateTime?         @db.DateTime(0)
   packageId    String            @db.VarChar(255)
   user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   package      Package           @relation(fields: [packageId], references: [id], onDelete: Cascade)

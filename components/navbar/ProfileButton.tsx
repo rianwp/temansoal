@@ -17,7 +17,7 @@ const ProfileButton = () => {
             </Avatar>
           </MenubarTrigger>
           <MenubarContent>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start px-2 py-1.5">
               <p className="font-semibold text-sm line-clamp-1">{session?.user?.name}</p>
               <p className="font-normal text-sm line-clamp-1">{session?.user?.email}</p>
             </div>
