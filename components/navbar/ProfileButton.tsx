@@ -3,8 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from "../ui/menubar"
 import { Separator } from "../ui/separator"
 import { signOut, useSession } from "next-auth/react"
+import ProfileInfo from "./ProfileInfo"
 
-const ProfileButton = () => {
+interface ProfileButtonProps {
+  status: string
+}
+
+const ProfileButton = ({status}: ProfileButtonProps) => {
   const { data: session } = useSession()
   return (
     <div className="hidden md:block">
@@ -17,10 +22,7 @@ const ProfileButton = () => {
             </Avatar>
           </MenubarTrigger>
           <MenubarContent>
-            <div className="flex flex-col items-start px-2 py-1.5">
-              <p className="font-semibold text-sm line-clamp-1">{session?.user?.name}</p>
-              <p className="font-normal text-sm line-clamp-1">{session?.user?.email}</p>
-            </div>
+            <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={status}/>
             <Separator/>
             <MenubarItem>
               <button onClick={() => signOut()}>Logout</button>

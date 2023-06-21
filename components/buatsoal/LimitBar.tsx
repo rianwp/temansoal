@@ -1,16 +1,22 @@
 import { Progress } from "../ui/progress"
+import { useRecoilState } from "recoil"
+import { currentUsageState } from "@/lib/state"
 
 interface LimitBarProps {
-  current: number
-  limit: number,
+  firstValue: number
 }
 
-const LimitBar = ({current, limit}: LimitBarProps) => {
-  const progress = current/limit*100
+const LimitBar = ({firstValue}: LimitBarProps) => {
+  const [currentUsage, setCurrentUsage] = useRecoilState<number>(currentUsageState)
+  if(currentUsage === 0){
+    setCurrentUsage(firstValue)
+  }
+  const limit = 20
+  const progress =  currentUsage/limit*100
   return (
     <div className="flex flex-row w-full items-center">
       <Progress value={progress} />
-      <p className="text-sm font-medium ml-2">{current}/{limit}</p>
+      <p className="text-sm font-medium ml-2">{currentUsage}/{limit}</p>
     </div>
   )
 }

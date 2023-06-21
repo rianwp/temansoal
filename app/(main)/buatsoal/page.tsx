@@ -3,17 +3,19 @@
 import FilterForm from "@/components/buatsoal/FilterForm"
 import SoalCard from "@/components/buatsoal/SoalCard"
 import { Separator } from "@/components/ui/separator"
-import { haveOptionsState, isGenerateSoalClickedState, jumlahSoalState, mataPelajaranState, tingkatKesulitanState, topikState } from "@/lib/state"
-import { useRecoilState, useRecoilValue } from "recoil"
+import { currentUsageState, haveOptionsState, isGenerateSoalClickedState, isGeneratingSoalState, jumlahSoalState, mataPelajaranState, tingkatKesulitanState, topikState } from "@/lib/state"
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useState } from "react"
 import soal from "@/types/soal"
 import { useToast } from "@/components/ui/use-toast"
 import SoalCardSkeleton from "@/components/buatsoal/SoalCardSkeleton"
 import { functions } from "@/services/firebase"
 import { httpsCallable } from "firebase/functions"
+import { postFetcher } from "@/lib/fetcher"
+import { useMutation } from "@tanstack/react-query"
 
 const BuatSoalPage = () => {
-  const [isGenerateSoalClicked, setIsGenerateSoalClicked] = useRecoilState<boolean>(isGenerateSoalClickedState)
+  const setIsGenerateSoalClicked = useSetRecoilState<boolean>(isGenerateSoalClickedState)
   const mapel = useRecoilValue<string>(mataPelajaranState)
   const jumlahSoal = useRecoilValue<number[]>(jumlahSoalState)
   const haveOptions = useRecoilValue<boolean>(haveOptionsState)
@@ -21,9 +23,17 @@ const BuatSoalPage = () => {
   const topik = useRecoilValue<string>(topikState)
   const [soal, setSoal] = useState<soal[]>()
   const { toast } = useToast()
-  const [isGenerating, setIsGenarting] = useState<boolean>(false)
+  const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
+  const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
+  
+  const { isLoading: isUpdateLimitLoading, isError: isUpdateLimitError, data: updateLimit, mutate } = useMutation({
+    mutationKey: ["updateLimit"],
+    mutationFn: (jumlah: number) =>
+      postFetcher("/api/limit", { jumlahSoal: jumlah })
+  })
 
   const generateSoal = async () => {
+    const jumlah = jumlahSoal[0]
     setIsGenerateSoalClicked(true)
     const dataInput = {
       mapel,
@@ -31,11 +41,12 @@ const BuatSoalPage = () => {
       tingkatKesulitan,
       topik
     }
+    
     if(mapel !== ""){
       const arraySoal: Array<soal> = []
       setIsGenarting(true)
       try {
-        for(const i in [...Array(jumlahSoal[0])]){
+        for(const i in [...Array(jumlah)]){
           const buatSoal = httpsCallable(functions, "buatsoal")
           const res = await buatSoal(dataInput)
           const dataResult = res.data as { data: soal }
@@ -43,9 +54,21 @@ const BuatSoalPage = () => {
           dataSoal.mapel = dataInput.mapel
           arraySoal.push(dataSoal)
         }
-        setSoal(arraySoal)
-        setIsGenerateSoalClicked(false)
-        setIsGenarting(false)
+        mutate(jumlah)
+        if(!isUpdateLimitLoading){
+          setCurrentUsage((currVal) => currVal + jumlah)
+          setSoal(arraySoal)
+          setIsGenerateSoalClicked(false)
+          setIsGenarting(false)
+        }
+        if(isUpdateLimitError){
+          setIsGenarting(false)
+          toast({
+            variant: "destructive",
+            title: "Terjadi Kesalahan",
+            description: "Terjadi Kesalahan pada Aplikasi",
+          })
+        }
       }
       catch (error: any) {
         setIsGenarting(false)
@@ -84,7 +107,6 @@ const BuatSoalPage = () => {
             />
           ))
         }
-        
       </div>
     </div>
   )

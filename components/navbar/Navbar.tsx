@@ -11,6 +11,9 @@ import LoginButton from "./LoginButton"
 import { Separator } from "../ui/separator"
 import { useSession, signOut } from "next-auth/react"
 import ProfileButton from "./ProfileButton"
+import ProfileInfo from "./ProfileInfo"
+import { getFetcher } from "@/lib/fetcher"
+import { useQuery } from "@tanstack/react-query"
 
 interface NavbarProps {
   isHome: boolean
@@ -18,6 +21,12 @@ interface NavbarProps {
 
 const Navbar = ({isHome}: NavbarProps) => {
   const { data: session } = useSession()
+  const { isLoading, isError, data: accountStatus } = useQuery({
+    queryKey: ["accountStatus"],
+    queryFn: () =>
+      getFetcher("/api/accountstatus")
+  })
+  const isPremium = accountStatus?.isPremium ? "Premium" : "Free"
   const [isScrollPositionOnTop, setIsScrollPositionOnTop] = useState<boolean>(true)
   const { scrollY } = useScroll()
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -39,7 +48,7 @@ const Navbar = ({isHome}: NavbarProps) => {
       </div>
       <div className="hidden md:block">
         {session?.user ?
-          <ProfileButton/>
+          <ProfileButton status={isPremium}/>
           :
           <LoginButton/>
         }
@@ -51,6 +60,7 @@ const Navbar = ({isHome}: NavbarProps) => {
               <MenuButton onTop={isHome ? isScrollPositionOnTop : false}/>
             </MenubarTrigger>
             <MenubarContent>
+              <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/>
               <MenubarItem>
                 <Link href="/buatsoal">Buat Soal</Link>
               </MenubarItem>

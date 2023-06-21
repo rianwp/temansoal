@@ -1,12 +1,16 @@
-import { isGenerateSoalClickedState, mataPelajaranState } from "@/lib/state"
+import { isGenerateSoalClickedState, isLimitBarFirstCallState, mataPelajaranState } from "@/lib/state"
 import FormMataPelajaran from "./FormMataPelajaran"
 import LimitBar from "./LimitBar"
-import { useRecoilValue } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import FormTopik from "./FormTopik"
 import FormTingkatKesulitan from "./FormTingkatKesulitan"
 import FormJenisSoal from "./FormJenisSoal"
 import { Button } from "../ui/button"
 import FormJumlahSoal from "./FormJumlahSoal"
+import { useEffect, useState } from "react"
+import { Skeleton } from "../ui/skeleton"
+import { getFetcher } from "@/lib/fetcher"
+import { useQuery } from "@tanstack/react-query"
 
 interface FilterFormProps {
   onClick: () => void
@@ -14,13 +18,30 @@ interface FilterFormProps {
 
 const FilterForm = ({onClick}: FilterFormProps) => {
   const mapel = useRecoilValue<string>(mataPelajaranState)
+  const isGenerating = useRecoilValue<boolean>(isGenerateSoalClickedState)
   const isGenerateSoalClicked = useRecoilValue<boolean>(isGenerateSoalClickedState)
+  const [isLimtBarFirstCall, setIsLimtBarFirstCall] = useRecoilState<boolean>(isLimitBarFirstCallState)
+  const [firstValueCurrentUsage, setFirstValueCurrentUsage] = useState<number>(0)
+  const { isLoading, isError, data: currentUsageInitial } = useQuery({
+    queryKey: ["currentUsageInitial"],
+    queryFn: () => getFetcher("/api/limit"),
+  })
+  if(!isLoading && isLimtBarFirstCall){
+    if(!isError){
+      setFirstValueCurrentUsage(currentUsageInitial?.total)
+      setIsLimtBarFirstCall(false)
+    }
+  }
   return (
     <div className="flex flex-col space-y-4 items-start md:w-[350px] w-full p-4">
       <h1 className="text-lg font-bold">Filter Soal</h1>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Limit Penggunaan</p>
-        <LimitBar limit={15} current={1}/>
+        {isLoading? 
+          <Skeleton className="h-4 w-full"/>
+          :
+          <LimitBar firstValue={firstValueCurrentUsage}/>
+        }   
       </div>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Mata Pelajaran</p>
@@ -49,7 +70,7 @@ const FilterForm = ({onClick}: FilterFormProps) => {
         <p className="text-sm font-medium">Jumlah Soal</p>
         <FormJumlahSoal/>
       </div>
-      <Button onClick={onClick} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
+      <Button disabled={isGenerating} onClick={onClick} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
     </div>
   )
 }

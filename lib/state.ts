@@ -1,4 +1,5 @@
-import { atom } from "recoil"
+import { atom, selector } from "recoil"
+import { getFetcher } from "./fetcher"
 
 export const mataPelajaranState = atom({
   key: "mataPelajaranState",
@@ -38,4 +39,20 @@ export const haveOptionsState = atom({
 export const isFormValidState = atom({
   key: "isFormValidState",
   default: false,
+})
+
+
+export const currentUsageState = atom({
+  key: "currentUsageState",
+  default: 0,
+})
+
+export const isGeneratingSoalState = atom({
+  key: "isGeneratingSoalState",
+  default: false,
+})
+
+export const isLimitBarFirstCallState = atom({
+  key: "isLimitBarFirstCallState",
+  default: true,
 })

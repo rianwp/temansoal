@@ -2,6 +2,7 @@ import { OpenAIStreamMine } from "@/utils/openaistream"
 import { openai } from "@/services/openai"
 import generateQuestionForm from "@/types/generateQuestionForm"
 import { OpenAIStream, StreamingTextResponse } from "ai"
+import { NextResponse } from "next/server"
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not defined")
@@ -48,7 +49,10 @@ export const POST = async (req: Request) => {
     // })
   } catch(error) {
     console.log(error)
-    return new Response("Terjadi Kesalahan", {
+    return NextResponse.json({ 
+      success: false,
+      message: "Terjadi Kesalahan"
+    }, {
       status: 500,
     })
   }
