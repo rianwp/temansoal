@@ -60,7 +60,7 @@ const Navbar = ({isHome}: NavbarProps) => {
               <MenuButton onTop={isHome ? isScrollPositionOnTop : false}/>
             </MenubarTrigger>
             <MenubarContent>
-              <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/>
+              {session?.user ? <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/> : null }
               <MenubarItem>
                 <Link href="/buatsoal">Buat Soal</Link>
               </MenubarItem>
