@@ -14,13 +14,15 @@ import ProfileButton from "./ProfileButton"
 import ProfileInfo from "./ProfileInfo"
 import { getFetcher } from "@/lib/fetcher"
 import { useQuery } from "@tanstack/react-query"
+import { Skeleton } from "../ui/skeleton"
 
 interface NavbarProps {
   isHome: boolean
 }
 
 const Navbar = ({isHome}: NavbarProps) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const isSessionLoading = status === "loading"
   const { data: accountStatus } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
@@ -47,10 +49,13 @@ const Navbar = ({isHome}: NavbarProps) => {
         </div>
       </div>
       <div className="hidden md:block">
-        {session?.user ?
-          <ProfileButton status={isPremium}/>
+        {isSessionLoading ?
+          <Skeleton className="h-10 w-10 rounded-full" />
           :
-          <LoginButton/>
+          session?.user ?
+            <ProfileButton status={isPremium}/>
+            :
+            <LoginButton/>
         }
       </div>
       <div className="md:hidden block">
@@ -60,7 +65,11 @@ const Navbar = ({isHome}: NavbarProps) => {
               <MenuButton onTop={isHome ? isScrollPositionOnTop : false}/>
             </MenubarTrigger>
             <MenubarContent>
-              {session?.user ? <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/> : null }
+              {!isSessionLoading ?
+                session?.user ? <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/> : null
+                :
+                null
+              }
               <MenubarItem>
                 <Link className="w-full" href="/buatsoal">Buat Soal</Link>
               </MenubarItem>
@@ -69,14 +78,17 @@ const Navbar = ({isHome}: NavbarProps) => {
               </MenubarItem>
               <Separator/>
               <MenubarItem>
-                {session?.user ?
-                  <button className="w-full" onClick={() => signOut()}>
-                    Logout
-                  </button>
+                {!isSessionLoading ?
+                  session?.user ?
+                    <button className="w-full flex flex-row justify-start" onClick={() => signOut()}>
+                      Logout
+                    </button>
+                    :
+                    <Link className="w-full" href="/login">
+                      Login
+                    </Link>
                   :
-                  <Link className="w-full" href="/login">
-                    Login
-                  </Link>
+                  null
                 }
               </MenubarItem>
             </MenubarContent>

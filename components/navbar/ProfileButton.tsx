@@ -24,11 +24,11 @@ const ProfileButton = ({status}: ProfileButtonProps) => {
           <MenubarContent>
             <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={status}/>
             <Separator/>
-            <button onClick={() => signOut()}>
-              <MenubarItem>
+            <MenubarItem>
+              <button className="w-full flex flex-row justify-start" onClick={() => signOut()}>
                 Logout
-              </MenubarItem>
-            </button>
+              </button>
+            </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
