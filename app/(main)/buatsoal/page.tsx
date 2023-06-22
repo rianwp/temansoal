@@ -26,7 +26,7 @@ const BuatSoalPage = () => {
   const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
   const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
   
-  const { isLoading: isUpdateLimitLoading, isError: isUpdateLimitError, data: updateLimit, mutate } = useMutation({
+  const { isLoading, isError, data: updateLimit, mutateAsync } = useMutation({
     mutationKey: ["updateLimit"],
     mutationFn: (jumlah: number) =>
       postFetcher("/api/limit", { jumlahSoal: jumlah })
@@ -54,20 +54,19 @@ const BuatSoalPage = () => {
           dataSoal.mapel = dataInput.mapel
           arraySoal.push(dataSoal)
         }
-        mutate(jumlah)
-        if(!isUpdateLimitLoading){
+        await mutateAsync(jumlah)
+        if(!isLoading){
           setCurrentUsage((currVal) => currVal + jumlah)
           setSoal(arraySoal)
           setIsGenerateSoalClicked(false)
           setIsGenarting(false)
-        }
-        if(isUpdateLimitError){
-          setIsGenarting(false)
-          toast({
-            variant: "destructive",
-            title: "Terjadi Kesalahan",
-            description: "Terjadi Kesalahan pada Aplikasi",
-          })
+          if(isError){
+            setIsGenarting(false)
+            toast({
+              variant: "destructive",
+              title: "Terjadi Kesalahan",
+            })
+          }
         }
       }
       catch (error: any) {

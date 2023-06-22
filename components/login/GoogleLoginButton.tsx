@@ -15,7 +15,7 @@ const GoogleLoginButton = () => {
     setIsClicked(false)
   }
   return (
-    <Button variant="outline" size="lg" className="flex flex-row space-x-2 justify-start items-center w-full" onClick={buttonClick}>
+    <Button disabled={isClicked} variant="outline" size="lg" className="flex flex-row space-x-2 justify-start items-center w-full" onClick={buttonClick}>
       {!isClicked ?
         <FcGoogle className="w-8 h-8"/>
         :
