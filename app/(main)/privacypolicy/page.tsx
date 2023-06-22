@@ -1,12 +1,11 @@
-import BuatSoal from "@/components/buatsoal"
-
 export const metadata = {
-  title: "Buat Soal",
+  title: "Privacy & Policy",
   description: "",
 }
+
 const Page = () => {
   return (
-    <BuatSoal/>
+    <div>Page</div>
   )
 }
 

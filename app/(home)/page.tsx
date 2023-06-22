@@ -1,12 +1,14 @@
-import Hero from "@/components/main/hero/Hero"
+import Home from "@/components/main"
 
-const HomePage = () => {
+export const metadata = {
+  title: "Teman Soal",
+  description: "",
+}
+
+const Page = () => {
   return (
-    <>
-      <Hero/>
-      <div className="h-screen w-full"></div>
-    </>
+    <Home/>
   )
 }
 
-export default HomePage
+export default Page
