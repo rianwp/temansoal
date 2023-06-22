@@ -71,6 +71,7 @@ const BuatSoalPage = () => {
       }
       catch (error: any) {
         setIsGenarting(false)
+        setIsGenerateSoalClicked(false)
         toast({
           variant: "destructive",
           title: "Terjadi Kesalahan",
