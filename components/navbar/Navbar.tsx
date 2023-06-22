@@ -20,8 +20,7 @@ interface NavbarProps {
 }
 
 const Navbar = ({isHome}: NavbarProps) => {
-  const { data: session, status } = useSession()
-  const isSessionLoading = status === "loading" 
+  const { data: session } = useSession()
   const { data: accountStatus } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
@@ -48,13 +47,10 @@ const Navbar = ({isHome}: NavbarProps) => {
         </div>
       </div>
       <div className="hidden md:block">
-        {!isSessionLoading ? 
-            session?.user ?
-              <ProfileButton status={isPremium}/>
-              :
-              <LoginButton/>
+        {session?.user ?
+          <ProfileButton status={isPremium}/>
           :
-          null
+          <LoginButton/>
         }
       </div>
       <div className="md:hidden block">
@@ -64,38 +60,25 @@ const Navbar = ({isHome}: NavbarProps) => {
               <MenuButton onTop={isHome ? isScrollPositionOnTop : false}/>
             </MenubarTrigger>
             <MenubarContent>
-              {!isSessionLoading ? 
-                session?.user ? <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/> : null 
-                :
-                null
-              }
-              <Link href="/buatsoal">
-                <MenubarItem>
-                  Buat Soal
-                </MenubarItem>
-              </Link>
-              <Link href="/koleksisoal">
-                <MenubarItem>
-                  Koleksi Soal
-                </MenubarItem>
-              </Link>
+              {session?.user ? <ProfileInfo name={session?.user?.name || ""} email={session?.user?.email || ""} status={isPremium}/> : null }
+              <MenubarItem>
+                <Link className="w-full" href="/buatsoal">Buat Soal</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link className="w-full" href="/koleksisoal">Koleksi Soal</Link>
+              </MenubarItem>
               <Separator/>
-              {!isSessionLoading ? 
-                  session?.user ?
-                    <button onClick={() => signOut()}>
-                      <MenubarItem>
-                        Logout
-                      </MenubarItem>
-                    </button>
-                    :
-                    <Link href="/login">
-                      <MenubarItem>
-                        Login
-                      </MenubarItem>
-                    </Link>
-                :
-                null
-              }
+              <MenubarItem>
+                {session?.user ?
+                  <button className="w-full" onClick={() => signOut()}>
+                    Logout
+                  </button>
+                  :
+                  <Link className="w-full" href="/login">
+                    Login
+                  </Link>
+                }
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
