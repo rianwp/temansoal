@@ -1,4 +1,4 @@
-import { isGenerateSoalClickedState, isLimitBarFirstCallState, mataPelajaranState } from "@/lib/state"
+import { currentUsageState, isGenerateSoalClickedState, isGeneratingSoalState, isLimitBarFirstCallState, mataPelajaranState } from "@/lib/state"
 import FormMataPelajaran from "./FormMataPelajaran"
 import LimitBar from "./LimitBar"
 import { useRecoilState, useRecoilValue } from "recoil"
@@ -7,18 +7,21 @@ import FormTingkatKesulitan from "./FormTingkatKesulitan"
 import FormJenisSoal from "./FormJenisSoal"
 import { Button } from "../ui/button"
 import FormJumlahSoal from "./FormJumlahSoal"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Skeleton } from "../ui/skeleton"
 import { getFetcher } from "@/lib/fetcher"
 import { useQuery } from "@tanstack/react-query"
+import { useToast } from "../ui/use-toast"
 
 interface FilterFormProps {
   onClick: () => void
 }
 
 const FilterForm = ({onClick}: FilterFormProps) => {
+  const { toast } = useToast()
   const mapel = useRecoilValue<string>(mataPelajaranState)
-  const isGenerating = useRecoilValue<boolean>(isGenerateSoalClickedState)
+  const isGenerating = useRecoilValue<boolean>(isGeneratingSoalState)
+  const currentUsage = useRecoilValue<number>(currentUsageState)
   const isGenerateSoalClicked = useRecoilValue<boolean>(isGenerateSoalClickedState)
   const [isLimtBarFirstCall, setIsLimtBarFirstCall] = useRecoilState<boolean>(isLimitBarFirstCallState)
   const [firstValueCurrentUsage, setFirstValueCurrentUsage] = useState<number>(0)
@@ -28,8 +31,26 @@ const FilterForm = ({onClick}: FilterFormProps) => {
   })
   if(!isLoading && isLimtBarFirstCall){
     if(!isError){
-      setFirstValueCurrentUsage(currentUsageInitial?.total)
+      if(currentUsageInitial?.isLimit){
+        setFirstValueCurrentUsage(currentUsageInitial?.total)
+      }
       setIsLimtBarFirstCall(false)
+    }
+  }
+
+  const handleClick = () => {
+    if(currentUsageInitial?.isLimit){
+      if(currentUsageInitial?.total >= 20 || currentUsage >= 20){
+        toast({
+          variant: "default",
+          title: "Mencapai Limit",
+          description: "Kamu Sudah Mencapat Limit, Coba Lagi Besok",
+        })
+      } else{
+        onClick()
+      }
+    } else{
+      onClick()
     }
   }
   return (
@@ -37,15 +58,22 @@ const FilterForm = ({onClick}: FilterFormProps) => {
       <h1 className="text-lg font-bold">Filter Soal</h1>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Limit Penggunaan</p>
-        {isLoading? 
+        {isLoading ? 
           <Skeleton className="h-4 w-full"/>
           :
-          <LimitBar firstValue={firstValueCurrentUsage}/>
+          currentUsageInitial?.isLimit ?
+            <LimitBar firstValue={firstValueCurrentUsage}/>
+            :
+            <p className="font-semibold text-sky-600">Sisa Subscription {currentUsageInitial?.timeLeft} Hari Lagi</p>
         }   
       </div>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Mata Pelajaran</p>
-        <FormMataPelajaran/>
+        {isLoading ?
+          <Skeleton className="w-full h-14"/>
+          :
+          <FormMataPelajaran/>
+        }
         {(isGenerateSoalClicked && mapel === "") ?
           <p className="text-red-600 text-sm">Mapel Tidak Boleh Kosong</p>
           :
@@ -55,22 +83,42 @@ const FilterForm = ({onClick}: FilterFormProps) => {
       <div className="flex flex-row w-full">
         <div className="flex flex-col space-y-2 w-1/2 pr-4">
           <p className="text-sm font-medium">Tingkat Kesulitan</p>
-          <FormTingkatKesulitan/>
+          {isLoading ?
+            <Skeleton className="w-full h-10"/>
+            :
+            <FormTingkatKesulitan/>
+          }
         </div>
         <div className="flex flex-col space-y-2 w-1/2">
           <p className="text-sm font-medium">Jenis Soal</p>
-          <FormJenisSoal/>
+          {isLoading ?
+            <Skeleton className="w-full h-10"/>
+            :
+            <FormJenisSoal/>
+          }
         </div>
       </div>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Topik</p>
-        <FormTopik/>
+        {isLoading ?
+          <Skeleton className="w-full h-20"/>
+          :
+          <FormTopik/>
+        }
       </div>
       <div className="flex flex-col space-y-2 w-full">
         <p className="text-sm font-medium">Jumlah Soal</p>
-        <FormJumlahSoal/>
+        {isLoading ?
+          <Skeleton className="w-full h-5"/>
+          :
+          <FormJumlahSoal/>
+        }
       </div>
-      <Button disabled={isGenerating} onClick={onClick} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
+      {isLoading ?
+        <Skeleton className="w-full h-11"/>
+        :
+        <Button disabled={isGenerating} onClick={handleClick} size="lg" className="bg-sky-500 hover:bg-sky-600 w-full">Buat Soal</Button>
+      }
     </div>
   )
 }

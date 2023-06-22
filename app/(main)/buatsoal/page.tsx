@@ -58,10 +58,11 @@ const BuatSoalPage = () => {
         if(!isLoading){
           setCurrentUsage((currVal) => currVal + jumlah)
           setSoal(arraySoal)
-          setIsGenerateSoalClicked(false)
           setIsGenarting(false)
+          setIsGenerateSoalClicked(false)
           if(isError){
             setIsGenarting(false)
+            setIsGenerateSoalClicked(false)
             toast({
               variant: "destructive",
               title: "Terjadi Kesalahan",

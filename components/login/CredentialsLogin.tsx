@@ -6,10 +6,10 @@ import { Input } from "../ui/input"
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { Checkbox } from "../ui/checkbox"
-import { toast } from "../ui/use-toast"
-import { useRouter } from "next/navigation"
+import { useToast } from "../ui/use-toast"
 
 const CredentialsLogin = () => {
+  const { toast } = useToast()
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false)

@@ -6,7 +6,7 @@ import { Input } from "../ui/input"
 import { useState, useEffect } from "react"
 import { Checkbox } from "../ui/checkbox"
 import validateEmail from "@/utils/validateEmail"
-import { toast } from "../ui/use-toast"
+import { useToast } from "../ui/use-toast"
 import { postFetcher } from "@/lib/fetcher"
 import { useMutation } from "@tanstack/react-query"
 import createAccount from "@/types/createAccount"
@@ -17,6 +17,7 @@ const CredentialsSignup = () => {
     mutationFn: (data: createAccount) =>
       postFetcher("/api/auth/signup", data)
   })
+  const { toast } = useToast()
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const [nama, setNama] = useState<string>("")
   const [email, setEmail] = useState<string>("")
