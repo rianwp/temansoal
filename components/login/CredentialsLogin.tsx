@@ -10,7 +10,6 @@ import { toast } from "../ui/use-toast"
 import { useRouter } from "next/navigation"
 
 const CredentialsLogin = () => {
-  const router = useRouter()
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -30,7 +29,7 @@ const CredentialsLogin = () => {
         title: "Login Gagal",
       })
     } else{
-      router.push("/")
+      window.location.replace("/")
     }
   }
     

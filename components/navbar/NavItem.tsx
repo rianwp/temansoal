@@ -10,9 +10,11 @@ interface NavItemProps {
 const NavItem = ({children, href, onTop}: NavItemProps) => {
   const hover = onTop ? "hover:bg-white/20 text-white" : "hover:bg-black/10 text-sky-600"
   return (
-    <Button className={`${hover} bg-transparent`}>
-      <Link href={href}>{children}</Link>
-    </Button>
+    <Link href={href}>
+      <Button className={`${hover} bg-transparent`}>
+        {children}
+      </Button>
+    </Link>
   )
 }
 

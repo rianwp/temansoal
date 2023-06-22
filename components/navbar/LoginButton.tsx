@@ -3,9 +3,10 @@ import { Button } from "../ui/button"
 
 const LoginButton = () => {
   return (
-    <Button>
-      <Link href="/login">Login</Link>
-    </Button>
+    <Link href="/login">
+      <Button>Login</Button>
+    </Link>
+    
   )
 }
 
