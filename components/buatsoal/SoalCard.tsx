@@ -7,6 +7,7 @@ import soalTersimpan from "@/types/soalTersimpan"
 import { BookmarkPlus, Check, Loader2 } from "lucide-react"
 import { useRecoilState } from "recoil"
 import { koleksiSoalState } from "@/lib/state"
+import { mataPelajaran } from "@/lib/data"
 
 interface SoalCardProps {
   soal: string,
@@ -30,15 +31,16 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
         soal,
         pilihan,
         jawaban: typeof jawaban === "string" ? jawaban : `${jawaban.huruf}. ${jawaban.deskripsi}`,
-        mapel,
+        mapel: mataPelajaran.find((item) => item.nama.toLowerCase() === mapel)?.nama || "",
         pembahasan
       }
       await mutateAsync(data)
       if(!isLoading){
         if(isSuccess){
           data.id = simpanSoal.id
-          const newKoleksiSoal = [...koleksiSoal, data]
-          setKoleksiSoal(newKoleksiSoal)
+          const koleksiSoalTemp = koleksiSoal
+          koleksiSoalTemp.push(data)
+          setKoleksiSoal(koleksiSoalTemp)
         }
       }
     }

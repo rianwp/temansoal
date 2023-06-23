@@ -5,9 +5,9 @@ const SoalPopup = ({soal, jawaban, pilihan, pembahasan, mapel}: soalTersimpan) =
     <div className="w-full">
       <p className="text-base mb-1">Soal {mapel}</p>
       <p className="text-base font-semibold">{soal}</p>
-      <div className="w-full mt-4">
+      <div className="w-full"> 
         {pilihan ?
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 mt-2">
             {pilihan.map((item, index) => (
               <p key={index} className="flex flex-row items-center text-base space-x-1">
                 <p className="font-semibold">{item.huruf}.</p>
@@ -18,7 +18,7 @@ const SoalPopup = ({soal, jawaban, pilihan, pembahasan, mapel}: soalTersimpan) =
           :
           null
         }
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-2">
           <div className="flex flex-row items-start space-x-2">
             <p className="font-normal text-base">Jawaban: </p>
             <p className="font-semibold text-sky-600">{jawaban}</p>
