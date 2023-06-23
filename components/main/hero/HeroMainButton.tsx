@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import Link from "next/link"
 
 const HeroMainButton = () => {
   const animate = {
@@ -14,7 +15,11 @@ const HeroMainButton = () => {
       initial="initial"
       animate="in"
     >
-      <Button size="lg">Coba Sekarang</Button>
+      <Link href="/buatsoal">
+        <Button size="lg">
+          Coba Sekarang
+        </Button>
+      </Link>
     </motion.div>
   )
 }

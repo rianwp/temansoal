@@ -1,16 +1,48 @@
 import pilihan from "@/types/pilihan"
 import { Card } from "../ui/card"
+import { Button } from "../ui/button"
+import { postFetcher } from "@/lib/fetcher"
+import { useMutation } from "@tanstack/react-query"
+import soalTersimpan from "@/types/soalTersimpan"
+import { BookmarkPlus, Check, Loader2 } from "lucide-react"
+import { useRecoilState } from "recoil"
+import { koleksiSoalState } from "@/lib/state"
 
 interface SoalCardProps {
   soal: string,
   pilihan?: Array<pilihan>,
   jawaban: string | pilihan,
   urutan: number,
-  pembahasan?: string,
+  pembahasan: string,
   mapel: string
 }
 
 const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardProps) => {
+  const [koleksiSoal, setKoleksiSoal] = useRecoilState<soalTersimpan[]>(koleksiSoalState)
+  const { isLoading, isSuccess, data: simpanSoal, mutateAsync } = useMutation({
+    mutationKey: ["simpanSoal"],
+    mutationFn: (data: soalTersimpan) =>
+      postFetcher("/api/koleksisoal", data)
+  })
+  const handleClick = async () => {
+    if(!isLoading){
+      const data: soalTersimpan = {
+        soal,
+        pilihan,
+        jawaban: typeof jawaban === "string" ? jawaban : `${jawaban.huruf}. ${jawaban.deskripsi}`,
+        mapel,
+        pembahasan
+      }
+      await mutateAsync(data)
+      if(!isLoading){
+        if(isSuccess){
+          data.id = simpanSoal.id
+          const newKoleksiSoal = [...koleksiSoal, data]
+          setKoleksiSoal(newKoleksiSoal)
+        }
+      }
+    }
+  }
   return (
     <Card className="w-full p-4">
       <h2 className="flex flex-row items-start">
@@ -41,8 +73,24 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
           </div>
         </div>
       </div>
+      <div className="w-full justify-end flex flex-row items-center">
+        {isSuccess ?
+          <Button disabled={true} className="flex flex-row space-x-2" variant="outline">
+            <Check className="h-5 w-5 text-gray-400"/>
+            <p>Soal Tersimpan</p>
+          </Button>
+          :
+          <Button disabled={isLoading} className="flex flex-row space-x-2" variant="outline" onClick={handleClick}>
+            {isLoading ?
+              <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
+              :
+              <BookmarkPlus className="h-5 w-5 text-gray-400"/>
+            }
+            <p>Simpan Soal</p>
+          </Button>
+        }
+      </div>
     </Card>
-    //tombol menambahkan soal ke database
   )
 }
 

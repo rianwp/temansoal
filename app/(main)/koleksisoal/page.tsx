@@ -1,3 +1,5 @@
+import KoleksiSoal from "@/components/koleksisoal"
+
 export const metadata = {
   title: "Koleksi Soal",
   description: "",
@@ -5,7 +7,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <KoleksiSoal/>
   )
 }
 

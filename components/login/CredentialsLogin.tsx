@@ -16,20 +16,22 @@ const CredentialsLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   
   const buttonClick = async () => {
-    setIsLoading(true)
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false
-    })
-    setIsLoading(false)
-    if(res?.error) {
-      toast({
-        variant: "destructive",
-        title: "Login Gagal",
+    if(!isLoading) {
+      setIsLoading(true)
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false
       })
-    } else{
-      window.location.replace("/")
+      setIsLoading(false)
+      if(res?.error) {
+        toast({
+          variant: "destructive",
+          title: "Login Gagal",
+        })
+      } else{
+        window.location.replace("/")
+      }
     }
   }
     
@@ -49,7 +51,7 @@ const CredentialsLogin = () => {
       </div>
       <Button disabled={isLoading} size="lg" className="flex flex-row space-x-2 justify-center items-center w-full" onClick={buttonClick}>
         {isLoading ?
-          <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+          <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
           :
           null
         }

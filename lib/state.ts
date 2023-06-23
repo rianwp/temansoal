@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil"
-import { getFetcher } from "./fetcher"
+import soalTersimpan from "@/types/soalTersimpan"
 
 export const mataPelajaranState = atom({
   key: "mataPelajaranState",
@@ -41,7 +41,6 @@ export const isFormValidState = atom({
   default: false,
 })
 
-
 export const currentUsageState = atom({
   key: "currentUsageState",
   default: 0,
@@ -54,5 +53,15 @@ export const isGeneratingSoalState = atom({
 
 export const isLimitBarFirstCallState = atom({
   key: "isLimitBarFirstCallState",
+  default: true,
+})
+
+export const koleksiSoalState = atom<soalTersimpan[]>({
+  key: "koleksiSoalState",
+  default: [],
+})
+
+export const isKoleksiSoalFirstCallState = atom({
+  key: "isKoleksiSoalFirstCallState",
   default: true,
 })

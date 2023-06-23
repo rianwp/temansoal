@@ -1,3 +1,5 @@
+import PrivacyPolicy from "@/components/privacypolicy"
+
 export const metadata = {
   title: "Privacy & Policy",
   description: "",
@@ -5,7 +7,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <PrivacyPolicy/>
   )
 }
 

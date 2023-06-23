@@ -49,16 +49,18 @@ const CredentialsSignup = () => {
 
   
   const buttonClick = async () => {
-    setIsClicked(true)
-    if(isEmailValidate && isNamaValidate && isPasswordValidate) {
-      const data = {
-        email,
-        nama,
-        password
+    if(!isLoading) {
+      setIsClicked(true)
+      if(isEmailValidate && isNamaValidate && isPasswordValidate) {
+        const data = {
+          email,
+          nama,
+          password
+        }
+        await mutateAsync(data)
       }
-      await mutateAsync(data)
+      setIsClicked(false)
     }
-    setIsClicked(false)
   }
   useEffect(() => {
     if(!isLoading && isClicked){
@@ -121,7 +123,7 @@ const CredentialsSignup = () => {
       </div>
       <Button disabled={isLoading} size="lg" className="flex flex-row space-x-2 justify-center items-center w-full" onClick={buttonClick}>
         {isLoading ?
-          <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+          <Loader2 className="h-5 w-5 animate-spin text-gray-400" />
           :
           null
         }

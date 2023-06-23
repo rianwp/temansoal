@@ -39,18 +39,20 @@ const FilterForm = ({onClick}: FilterFormProps) => {
   }
 
   const handleClick = () => {
-    if(currentUsageInitial?.isLimit){
-      if(currentUsageInitial?.total >= 20 || currentUsage >= 20){
-        toast({
-          variant: "default",
-          title: "Mencapai Limit",
-          description: "Kamu Sudah Mencapat Limit, Coba Lagi Besok",
-        })
+    if(!isGenerating) {
+      if(currentUsageInitial?.isLimit){
+        if(currentUsageInitial?.total >= 20 || currentUsage >= 20){
+          toast({
+            variant: "default",
+            title: "Kamu Sudah Mencapai Limit",
+            description: "Coba Lagi Besok atau Upgrade ke Premium",
+          })
+        } else{
+          onClick()
+        }
       } else{
         onClick()
       }
-    } else{
-      onClick()
     }
   }
   return (
@@ -62,7 +64,7 @@ const FilterForm = ({onClick}: FilterFormProps) => {
           <Skeleton className="h-4 w-full"/>
           :
           currentUsageInitial?.isLimit ?
-            <LimitBar firstValue={firstValueCurrentUsage}/>
+            <LimitBar initialValue={firstValueCurrentUsage}/>
             :
             <p className="font-semibold text-sky-600">Sisa Subscription {currentUsageInitial?.timeLeft} Hari Lagi</p>
         }   

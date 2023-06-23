@@ -1,3 +1,5 @@
+import TermsOfService from "@/components/termsofservice"
+
 export const metadata = {
   title: "Terms of Service",
   description: "",
@@ -5,7 +7,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <TermsOfService/>
   )
 }
 
