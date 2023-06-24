@@ -42,8 +42,8 @@ model User {
   name          String?
   email         String?         @unique
   emailVerified DateTime?
-  password      String?
   image         String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
   SoalTersimpan SoalTersimpan[]
@@ -60,16 +60,16 @@ model VerificationToken {
 }
 
 model SoalTersimpan {
-  id              String   @id @default(cuid())
-  soal            String   @db.VarChar(255)
-  pilihan         Json?    @db.Json
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @default(now()) @updatedAt
-  userId          String   @db.VarChar(255)
-  jawaban         String   @db.Text
-  mapel           String   @db.VarChar(255)
-  pembahasan      String   @db.Text
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  soal       String   @db.VarChar(255)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+  userId     String   @db.VarChar(255)
+  jawaban    String   @db.Text
+  mapel      String   @db.VarChar(255)
+  pilihan    Json?
+  pembahasan String   @db.Text
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
