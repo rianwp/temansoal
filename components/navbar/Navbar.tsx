@@ -76,7 +76,6 @@ const Navbar = ({isHome}: NavbarProps) => {
               <MenubarItem>
                 <Link className="w-full" href="/koleksisoal">Koleksi Soal</Link>
               </MenubarItem>
-              <Separator/>
               <MenubarItem>
                 {!isSessionLoading ?
                   session?.user ?
