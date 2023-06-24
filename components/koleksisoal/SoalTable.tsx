@@ -10,6 +10,7 @@ import { Card } from "../ui/card"
 import soalTersimpan from "@/types/soalTersimpan"
 import { koleksiSoalState } from "@/lib/state"
 import { useRecoilState } from "recoil"
+import TableSkeleton from "./TableSkeleton"
 
 interface SoalTableProps {
   initialData: Array<soalTersimpan>,
@@ -25,26 +26,30 @@ const SoalTable = ({initialData, isDataLoading}: SoalTableProps) => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-10">No</TableHead>
-            <TableHead className="w-full align-middle">Soal</TableHead>
-            <TableHead className="w-2/12 align-middle">Jenis Soal</TableHead>
-            <TableHead className="w-2/12 align-middle">Mata Pelajaran</TableHead>
-            <TableHead className="w-3/12 align-middle text-center">Detail</TableHead>
+            <TableHead className="w-10"></TableHead>
+            <TableHead className="w-8/12">Soal</TableHead>
+            <TableHead className="w-1/12">Jenis Soal</TableHead>
+            <TableHead className="w-1/12">Mata Pelajaran</TableHead>
+            <TableHead className="w-2/12 text-center">Detail</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {koleksiSoal.map((item, index) =>(
-            <SoalCol
-              id={item.id}
-              urutan={index+1}
-              key={index}
-              soal={item.soal}
-              mapel={item.mapel}
-              jawaban={item.jawaban}
-              pembahasan={item.pembahasan}
-              pilihan={item.pilihan}
-            />
-          ))}
+          {!isDataLoading ?
+            koleksiSoal.map((item, index) =>(
+              <SoalCol
+                id={item.id}
+                urutan={index+1}
+                key={index}
+                soal={item.soal}
+                mapel={item.mapel}
+                jawaban={item.jawaban}
+                pembahasan={item.pembahasan}
+                pilihan={item.pilihan}
+              />
+            ))
+            :
+            <TableSkeleton/>
+          }
         </TableBody>
       </Table>
     </Card>

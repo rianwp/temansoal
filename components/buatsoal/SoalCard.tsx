@@ -75,7 +75,7 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
           </div>
         </div>
       </div>
-      <div className="w-full justify-end flex flex-row items-center">
+      <div className="w-full justify-end flex flex-row items-center mt-2">
         {isSuccess ?
           <Button disabled={true} className="flex flex-row space-x-2" variant="outline">
             <Check className="h-5 w-5 text-gray-400"/>
