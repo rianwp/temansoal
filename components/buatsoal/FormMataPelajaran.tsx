@@ -1,6 +1,6 @@
 import * as React from "react"
 import { ChevronsUpDown } from "lucide-react"
-import { useRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { mataPelajaranState } from "@/lib/state"
+import { isGeneratingSoalState, mataPelajaranState } from "@/lib/state"
 import { mataPelajaran } from "@/lib/data"
 
 
@@ -22,9 +22,10 @@ const FormMataPelajaran = () => {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = useRecoilState<string>(mataPelajaranState)
   const namaMapel = mataPelajaran.find((mapel) => mapel.nama.toLowerCase() === value)?.nama
+  const isGenerating = useRecoilValue<boolean>(isGeneratingSoalState)
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger disabled={isGenerating} asChild>
         <Button
           variant="outline"
           role="combobox"
