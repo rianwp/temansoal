@@ -66,7 +66,7 @@ const FilterForm = ({onClick}: FilterFormProps) => {
           currentUsageInitial?.isLimit ?
             <LimitBar initialValue={firstValueCurrentUsage}/>
             :
-            <p className="font-semibold text-sky-600">Sisa Subscription {currentUsageInitial?.timeLeft} Hari Lagi</p>
+            <p className="font-semibold text-sky-600">Sisa Subscription {currentUsageInitial?.dayLeft} Hari Lagi</p>
         }   
       </div>
       <div className="flex flex-col space-y-2 w-full">

@@ -60,11 +60,11 @@ export const GET = async (req: Request) => {
       if(transaction && transaction.length > 0){
         const currentTime = new Date().getTime()
         const expiredTime = transaction.find((item) => item.is_active)?.expired_at?.getTime() as number
-        const timeLeft = expiredTime - currentTime/(1000 * 3600 * 24)
+        const timeLeft = expiredTime - currentTime
         return NextResponse.json({
           success: true,
           isLimit: false,
-          timeLeft: timeLeft
+          dayLeft: Math.floor(timeLeft/(1000 * 3600 * 24))
         }, {
           status: 200,
         })
