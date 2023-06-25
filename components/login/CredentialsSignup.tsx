@@ -122,7 +122,6 @@ const CredentialsSignup = () => {
           <Checkbox id="checbox" onClick={() => setShowPassword(!showPassword)} />
           <label htmlFor="checkbox" className="text-sm">Tampilkan Password</label>
         </div>
-        
       </div>
       <Button disabled={isLoading} size="lg" className="flex flex-row space-x-2 justify-center items-center w-full" onClick={buttonClick}>
         {isLoading ?

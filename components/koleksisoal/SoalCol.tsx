@@ -38,12 +38,10 @@ const SoalCol = ({soal, jawaban, pilihan, pembahasan, mapel, urutan, id}: SoalCo
             title: "Berhasil Dihapus",
           })
         } else{
-          if(isError){
-            toast({
-              variant: "destructive",
-              title: "Terjadi Kesalahan",
-            })
-          }
+          toast({
+            variant: "destructive",
+            title: "Terjadi Kesalahan",
+          })
         }
       }
     }

@@ -66,8 +66,9 @@ export const POST = async (req: Request) => {
       })
       return NextResponse.json({ 
         success: true,
+        orderId: orderId,
         token: transactionJson.token,
-        redirect_url: transactionJson.redirect_url
+        redirectUrl: transactionJson.redirect_url
       }, {
         status: 200,
       })

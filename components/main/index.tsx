@@ -1,10 +1,11 @@
 import Hero from "@/components/main/hero/Hero"
+import Pricing from "./pricing/Pricing"
 
 const Home = () => {
   return (
     <>
       <Hero/>
-      <div className="h-screen w-full"></div>
+      <Pricing/>
     </>
   )
 }
