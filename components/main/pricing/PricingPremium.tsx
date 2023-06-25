@@ -22,7 +22,10 @@ const PricingPremium = () => {
   const { data: accountStatus } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
-      getFetcher("/api/accountstatus")
+      getFetcher("/api/accountstatus"),
+    onSuccess(data) {
+        console.log(data)
+    },
   })
   const isPremium = accountStatus?.isPremium ? true : false
   const handleTransaction = async () => {
