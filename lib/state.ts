@@ -55,13 +55,3 @@ export const isLimitBarFirstCallState = atom({
   key: "isLimitBarFirstCallState",
   default: true,
 })
-
-export const koleksiSoalState = atom<soalTersimpan[]>({
-  key: "koleksiSoalState",
-  default: [],
-})
-
-export const isKoleksiSoalFirstCallState = atom({
-  key: "isKoleksiSoalFirstCallState",
-  default: true,
-})

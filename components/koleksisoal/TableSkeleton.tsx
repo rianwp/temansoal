@@ -9,16 +9,16 @@ const TableSkeleton = () => {
           <TableCell className="w-10">
             <Skeleton  className="h-4 w-full"/>
           </TableCell>
-          <TableCell className="w-8/12">
+          <TableCell className="md:w-6/12 w-8/12">
             <Skeleton className="h-4 w-full"/>
           </TableCell>
-          <TableCell className="w-1/12">
+          <TableCell className="md:w-2/12 w-1/12">
             <Skeleton className="h-4 w-full"/>
           </TableCell>
-          <TableCell className="w-1/12">
+          <TableCell className="w-2/12">
           <Skeleton className="h-4 w-full"/>
             </TableCell>
-          <TableCell className="w-2/12">
+          <TableCell className="md:w-2/12 w-1/12">
             <Skeleton className="h-4 w-full"/>
           </TableCell>
         </TableRow>

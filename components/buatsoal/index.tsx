@@ -15,6 +15,7 @@ import { postFetcher } from "@/lib/fetcher"
 import { useMutation } from "@tanstack/react-query"
 
 const BuatSoal = () => {
+  const { toast } = useToast()
   const setIsGenerateSoalClicked = useSetRecoilState<boolean>(isGenerateSoalClickedState)
   const mapel = useRecoilValue<string>(mataPelajaranState)
   const jumlahSoal = useRecoilValue<number[]>(jumlahSoalState)
@@ -22,7 +23,6 @@ const BuatSoal = () => {
   const tingkatKesulitan = useRecoilValue<string>(tingkatKesulitanState)
   const topik = useRecoilValue<string>(topikState)
   const [soal, setSoal] = useState<soal[]>()
-  const { toast } = useToast()
   const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
   const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
   

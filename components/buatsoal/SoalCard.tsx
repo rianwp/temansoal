@@ -2,12 +2,11 @@ import pilihan from "@/types/pilihan"
 import { Card } from "../ui/card"
 import { Button } from "../ui/button"
 import { postFetcher } from "@/lib/fetcher"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import soalTersimpan from "@/types/soalTersimpan"
 import { BookmarkPlus, Check, Loader2 } from "lucide-react"
-import { useRecoilState } from "recoil"
-import { koleksiSoalState } from "@/lib/state"
 import { mataPelajaran } from "@/lib/data"
+import { useToast } from "../ui/use-toast"
 
 interface SoalCardProps {
   soal: string,
@@ -19,11 +18,13 @@ interface SoalCardProps {
 }
 
 const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardProps) => {
-  const [koleksiSoal, setKoleksiSoal] = useRecoilState<soalTersimpan[]>(koleksiSoalState)
-  const { isLoading, isSuccess, data: simpanSoal, mutateAsync } = useMutation({
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  const { isLoading, isSuccess, data: simpanSoal, mutateAsync, isError } = useMutation({
     mutationKey: ["simpanSoal"],
     mutationFn: (data: soalTersimpan) =>
-      postFetcher("/api/koleksisoal", data)
+      postFetcher("/api/koleksisoal", data),
+    onSuccess: () => queryClient.invalidateQueries(["koleksiSoalInitial"])
   })
   const handleClick = async () => {
     if(!isLoading){
@@ -36,11 +37,11 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
       }
       await mutateAsync(data)
       if(!isLoading){
-        if(isSuccess){
-          data.id = simpanSoal.id
-          const koleksiSoalTemp = koleksiSoal
-          koleksiSoalTemp.push(data)
-          setKoleksiSoal(koleksiSoalTemp)
+        if(isError){
+          toast({
+            variant: "destructive",
+            title: "Terjadi Kesalahan",
+          })
         }
       }
     }
@@ -53,7 +54,7 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
       </h2>
       <div className="pl-6 w-full">
         {pilihan ?
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 mt-2">
             {pilihan.map((item, index) => (
               <p key={index} className="flex flex-row items-center text-base space-x-1">
                 <p className="font-semibold">{item.huruf}.</p>
@@ -65,11 +66,11 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
           null
         }
         <div className="flex flex-col">
-          <div className="flex flex-row items-start space-x-2">
+          <div className="flex flex-row items-start space-x-2 mt-2">
             <p className="font-normal text-base">Jawaban: </p>
             <p className="font-semibold text-sky-600">{typeof jawaban === "string" ? jawaban : `${jawaban.huruf}. ${jawaban.deskripsi}`}</p>
           </div>
-          <div className="flex flex-row items-start space-x-2">
+          <div className="flex flex-row items-start space-x-2 mt-2">
             <p className="font-normal text-base">Pembahasan: </p>
             <p className="font-normal text-base">{pembahasan}</p>
           </div>
