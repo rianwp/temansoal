@@ -113,15 +113,16 @@ const CredentialsSignup = () => {
       <div className="flex flex-col items-start space-y-1.5 w-full">
         <label htmlFor="password" className="text-sm font-medium">Password</label>
         <Input className="w-full" id="password" onChange={(event) => setPassword(event.target.value)} type={showPassword ? "text" : "password"} placeholder="Masukan Password..." />
-        <div className="flex flex-row space-x-2 pt-1 pb-3">
-          <Checkbox id="checbox" onClick={() => setShowPassword(!showPassword)} />
-          <label htmlFor="checkbox" className="text-sm">Tampilkan Password</label>
-        </div>
         {!isPasswordValidate && isFirstTimeClicked ?
           <p className="text-red-600 text-sm">Password Minimal 8 Karakter</p>
           :
           null
         }
+        <div className="flex flex-row space-x-2 pt-1 pb-3">
+          <Checkbox id="checbox" onClick={() => setShowPassword(!showPassword)} />
+          <label htmlFor="checkbox" className="text-sm">Tampilkan Password</label>
+        </div>
+        
       </div>
       <Button disabled={isLoading} size="lg" className="flex flex-row space-x-2 justify-center items-center w-full" onClick={buttonClick}>
         {isLoading ?
