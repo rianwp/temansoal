@@ -1,8 +1,11 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import crypto from "crypto"
 import { prisma } from "@/lib/db"
 
-export const POST = async (req: Request) => {
+export const POST = async (req: NextRequest) => {
+  if (req.method !== "POST") {
+    return NextResponse.json({ message: "Method not allowed" }, { status: 500 })
+  }
   try {
     const { signature_key, order_id, payment_type, gross_amount, status_code, transaction_status } = await req.json()
     const verifySignature = crypto.createHash('sha512').update(`${order_id}${status_code}${gross_amount}${process.env.SERVER_KEY_MIDTRANS}`).digest("hex")
@@ -46,14 +49,7 @@ export const POST = async (req: Request) => {
         is_active: transaction_status === "capture" || transaction_status === "settlement" ? true : false
       }
     })
-    return NextResponse.json({ 
-      success: true,
-      message: "Sukses"
-    }, {
-      status: 200,
-    })
-
-    
+    return NextResponse.json({})
   } catch (error) {
     return NextResponse.json({
       success: false,
