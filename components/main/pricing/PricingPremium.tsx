@@ -61,9 +61,9 @@ const PricingPremium = () => {
           </div>
           {session?.user ?
             isPremium ?
-              <PricingButton onClick={handleTransaction} disabled={isLoading}>Beli</PricingButton>
-              :
               <PricingButton disabled={true}>Aktif</PricingButton>
+              :
+              <PricingButton onClick={handleTransaction} disabled={isLoading}>Beli</PricingButton>
             :
             <Link className="w-full" href="/login">
               <PricingButton>Beli</PricingButton>
