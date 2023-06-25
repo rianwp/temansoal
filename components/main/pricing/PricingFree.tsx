@@ -29,9 +29,7 @@ const PricingFree = () => {
             </div>
           </div>
           {session?.user ?
-            <Link className="w-full" href="/buatsoal">
-              <PricingButton disabled={true}>Sign Up</PricingButton>
-            </Link>
+            <PricingButton disabled={true}>Sign Up</PricingButton>
             :
             <Link className="w-full" href="/login">
               <PricingButton>Sign Up</PricingButton>
