@@ -90,6 +90,7 @@ model Package {
   name        String        @db.VarChar(255)
   code        String        @db.VarChar(255)
   price       Int
+  expireTime  Int
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
   Transaction Transaction[]

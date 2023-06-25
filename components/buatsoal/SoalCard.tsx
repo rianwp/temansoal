@@ -56,7 +56,7 @@ const SoalCard = ({soal, pilihan, jawaban, urutan, pembahasan, mapel}: SoalCardP
         {pilihan ?
           <div className="flex flex-col space-y-1 mt-2">
             {pilihan.map((item, index) => (
-              <p key={index} className="flex flex-row items-center text-base space-x-1">
+              <p key={index} className="flex flex-row items-start text-base space-x-1">
                 <p className="font-semibold">{item.huruf}.</p>
                 <p className="font-normal">{item.deskripsi}</p>
               </p>

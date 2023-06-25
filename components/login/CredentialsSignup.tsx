@@ -19,6 +19,7 @@ const CredentialsSignup = () => {
   })
   const { toast } = useToast()
   const [isClicked, setIsClicked] = useState<boolean>(false)
+  const [isFirstTimeClicked, setIsFirstTimeClicked] = useState<boolean>(false)
   const [nama, setNama] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -49,6 +50,7 @@ const CredentialsSignup = () => {
 
   
   const buttonClick = async () => {
+    setIsFirstTimeClicked(true)
     if(!isLoading) {
       setIsClicked(true)
       if(isEmailValidate && isNamaValidate && isPasswordValidate) {
@@ -93,7 +95,7 @@ const CredentialsSignup = () => {
       <div className="flex flex-col items-start space-y-1.5 w-full">
         <label htmlFor="nama" className="text-sm font-medium">Nama</label>
         <Input className="w-full" id="nama" onChange={(event) => setNama(event.target.value)} type="text" placeholder="Masukan Nama..." />
-        {!isNamaValidate && isClicked ?
+        {!isNamaValidate && isFirstTimeClicked ?
           <p className="text-red-600 text-sm">Nama Tidak Boleh Ksoong</p>
           :
           null
@@ -102,7 +104,7 @@ const CredentialsSignup = () => {
       <div className="flex flex-col items-start space-y-1.5 w-full">
         <label htmlFor="email" className="text-sm font-medium">Email</label>
         <Input className="w-full" id="email" onChange={(event) => setEmail(event.target.value)} type="email" placeholder="Masukan Email..." />
-        {!isEmailValidate && isClicked ?
+        {!isEmailValidate && isFirstTimeClicked ?
           <p className="text-red-600 text-sm">Email Tidak Valid</p>
           :
           null
@@ -115,7 +117,7 @@ const CredentialsSignup = () => {
           <Checkbox id="checbox" onClick={() => setShowPassword(!showPassword)} />
           <label htmlFor="checkbox" className="text-sm">Tampilkan Password</label>
         </div>
-        {!isPasswordValidate && isClicked ?
+        {!isPasswordValidate && isFirstTimeClicked ?
           <p className="text-red-600 text-sm">Password Minimal 8 Karakter</p>
           :
           null
