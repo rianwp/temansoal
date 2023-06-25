@@ -8,15 +8,15 @@ export const POST = async (req: NextRequest) => {
   }
   try {
     const { signature_key, order_id, payment_type, gross_amount, status_code, transaction_status } = await req.json()
-    const verifySignature = crypto.createHash('sha512').update(`${order_id}${status_code}${gross_amount}${process.env.SERVER_KEY_MIDTRANS}`).digest("hex")
+    // const verifySignature = crypto.createHash('sha512').update(`${order_id}${status_code}${gross_amount}${process.env.SERVER_KEY_MIDTRANS}`).digest("hex")
 
-    if (verifySignature !== signature_key) {
-      return NextResponse.json({ 
-        message: "Invalid Signature" 
-      }, { 
-        status: 500 
-      })
-    }
+    // if (verifySignature !== signature_key) {
+    //   return NextResponse.json({ 
+    //     message: "Invalid Signature" 
+    //   }, { 
+    //     status: 500 
+    //   })
+    // }
     if (!order_id) {
       return NextResponse.json({ 
         message: "Invalid order id" 
