@@ -18,14 +18,14 @@ const PricingPremium = () => {
     mutationKey: ["requestTransaction"],
     mutationFn: () =>
       postFetcher("/api/payment/request", { code: "premium_monthly"}),
+    onSuccess(data) {
+      console.log(data)
+    },
   })
   const { data: accountStatus } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
-      getFetcher("/api/accountstatus"),
-    onSuccess(data) {
-        console.log(data)
-    },
+      getFetcher("/api/accountstatus")
   })
   const isPremium = accountStatus?.isPremium ? true : false
   const handleTransaction = async () => {
