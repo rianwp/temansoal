@@ -16,10 +16,9 @@ const PricingPremium = () => {
   const { toast } = useToast()
   const { isLoading, isError, data: requestTransaction, mutateAsync } = useMutation({
     mutationKey: ["requestTransaction"],
-    mutationFn: () =>
-      postFetcher("/api/payment/request", { code: "premium_monthly"}),
+    mutationFn: () => postFetcher("/api/payment/request", { code: "premium_monthly"}),
     onSuccess(data) {
-      console.log(data)
+      window.open(data.redirectUrl, "_blank")
     },
   })
   const { data: accountStatus } = useQuery({
@@ -32,9 +31,7 @@ const PricingPremium = () => {
     if(!isLoading){
       await mutateAsync()
       if(!isLoading){
-        if(!isError){
-          window.open(requestTransaction.redirectUrl, "_blank")
-        } else{
+        if(isError){
           toast({
             variant: "destructive",
             title: "Terjadi Kesalahan",
