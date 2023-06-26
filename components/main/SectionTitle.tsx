@@ -4,7 +4,7 @@ interface SectionTitleProps {
 
 const SectionTitle = ({children}: SectionTitleProps) => {
   return (
-    <h1 className="text-3xl font-bold mx-auto mb-5 text-center">{children}</h1>
+    <h1 className="text-3xl font-bold mx-auto mb-10 text-center">{children}</h1>
   )
 }
 

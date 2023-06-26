@@ -10,7 +10,7 @@ const Hero = () => {
       <div className="md:w-1/2 w-full flex flex-col md:items-start items-center">
         <HeroText/>
         <HeroCounter/>
-        <div className="flex flex-row mt-10 space-x-3">
+        <div className="flex md:flex-row mt-10 md:space-x-3 flex-col space-y-3 md:space-y-0 items-center">
           <HeroMainButton/>
           <OpenaiLogo/>
         </div>

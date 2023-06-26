@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer"
 import Navbar from "@/components/navbar/Navbar"
 
 interface LayoutProps {
@@ -10,6 +11,7 @@ const Layout = ({children}: LayoutProps) => {
       <Navbar isHome={false}/>
       <div className="pt-16">
         {children}
+        <Footer/>
       </div>
     </>
   )

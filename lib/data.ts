@@ -138,3 +138,23 @@ export const jenisSoal = [
   "Essay",
   "Pilihan Ganda"
 ]
+
+export const faq = [
+  {
+    judul: "Apa itu Teman Soal?",
+    deskripsi: "Dengan dukungan artificial intelligence ChatGPT, buat soal menjadi secepat kilat."
+  },
+  {
+    judul: "Apa jenis materi pelajaran yang tersedia di Teman Soal?",
+    deskripsi: "Teman Soal menyediakan latihan soal bagi pelajar di tingkat SD, SMP, SMA, dan Umum. mata pelajaran yang disediakan juga lengkap seperti Matematika, Fisika, Biologi Dst."
+  },
+  {
+    judul: "Apakah penggunaan Teman Soal gratis?",
+    deskripsi: "Ya, penggunaan Teman Soal secara dasar adalah gratis. Namun, kami juga menyediakan paket premium yang dapat membuat soal lebih banyak, paket dapat diakses dengan biaya langganan bulanan."
+  },
+  {
+    judul: "Berapa jumlah maksimal yang dapat dibuat di Teman Soal",
+    deskripsi: "Untuk pengguna gratis maksimal jumlah soal yang dibuat hanya 20 buah soal. untuk membuat soal yang lebih banyak dapat memilih paket premium dengan berlangganan per bulan."
+  },
+
+]
