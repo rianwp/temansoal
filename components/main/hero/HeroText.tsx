@@ -11,7 +11,8 @@ const HeroText = () => {
     <motion.h1
       variants={animate}
       initial="initial"
-      animate="in"
+      whileInView="in"
+      viewport={{ once: true }}
       className="text-white lg:text-6xl md:text-5xl sm:text-3xl text-2xl font-bold leading-relaxed md:text-left text-center"
     >
       Membuat Soal, Jadi Lebih Mudah dengan Menggunakan AI

@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
@@ -8,9 +7,17 @@ import Feature from "./Feature"
 import TooltipInformation from "./TooltipInformation"
 import PricingButton from "./PricingButton"
 import { useSession } from "next-auth/react"
+import { useQuery } from "@tanstack/react-query"
+import { getFetcher } from "@/lib/fetcher"
 
 const PricingFree = () => {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
+  const { data: accountStatus } = useQuery({
+    queryKey: ["accountStatus"],
+    queryFn: () =>
+      getFetcher("/api/accountstatus")
+  })
+  const isPremium = accountStatus?.isPremium ? true : false
   return (
     <div className="p-4 md:w-1/2 w-full">
       <Card className="p-8 flex flex-col space-y-4 w-full">
@@ -29,7 +36,10 @@ const PricingFree = () => {
             </div>
           </div>
           {session?.user ?
-            <PricingButton disabled={true}>Sign Up</PricingButton>
+            isPremium ? 
+              <PricingButton disabled={true}>Sign Up</PricingButton>
+              :
+              <PricingButton disabled={true}>Aktif</PricingButton>
             :
             <Link className="w-full" href="/login">
               <PricingButton>Sign Up</PricingButton>

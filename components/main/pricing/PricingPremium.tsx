@@ -46,7 +46,7 @@ const PricingPremium = () => {
         <div className="flex flex-col space-y-5 items-center w-full">
           <div className="flex-col flex items-center">
             <p className="text-2xl font-semibold">Paket Premium</p>
-            <p className="text-sm text-gray-400">Untuk guru dan pengguna umum</p>
+            <p className="text-sm text-gray-400">Untuk guru dan tenaga pengajar</p>
           </div>
           <div className="flex flex-col space-y-1">
             <div className="flex flex-row justify-center items-center space-x-1">
