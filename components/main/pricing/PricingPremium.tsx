@@ -7,7 +7,6 @@ import PricingButton from "./PricingButton"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { getFetcher, postFetcher } from "@/lib/fetcher"
 import { useToast } from "@/components/ui/use-toast"
-import { useState } from "react"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
 

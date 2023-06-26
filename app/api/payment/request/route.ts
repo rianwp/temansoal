@@ -30,7 +30,6 @@ export const POST = async (req: Request) => {
           
         }
       }
-
       const transactionResponse = await fetch(process.env.MIDTRANS_SERVER_URL || "", {
         method: "POST",
         headers: {
@@ -66,9 +65,7 @@ export const POST = async (req: Request) => {
       })
       return NextResponse.json({ 
         success: true,
-        orderId: orderId,
-        token: transactionJson.token,
-        redirectUrl: transactionJson.redirect_url
+        redirectUrl: `${transactionJson.redirect_url}?gopayMode=deeplink`
       }, {
         status: 200,
       })
