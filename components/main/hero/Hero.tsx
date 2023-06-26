@@ -2,6 +2,7 @@ import HeroMainButton from "./HeroMainButton"
 import HeroText from "./HeroText"
 import HeroCounter from "./HeroCounter"
 import HeroImage from "./HeroImage"
+import OpenaiLogo from "./OpenaiLogo"
 
 const Hero = () => {
   return (
@@ -9,8 +10,9 @@ const Hero = () => {
       <div className="md:w-1/2 w-full flex flex-col md:items-start items-center">
         <HeroText/>
         <HeroCounter/>
-        <div className="flex flex-row mt-10">
+        <div className="flex flex-row mt-10 space-x-3">
           <HeroMainButton/>
+          <OpenaiLogo/>
         </div>
       </div>
       <HeroImage/>
