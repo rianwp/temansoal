@@ -50,7 +50,7 @@ const PricingPremium = () => {
           </div>
           <div className="flex flex-col space-y-1">
             <div className="flex flex-row justify-center items-center space-x-1">
-              <p className="text-xs">35.000</p>
+              <p className="text-xs line-through">35.000</p>
               <p className="text-xs bg-sky-500 px-1 py-0.5 rounded-full text-white">Diskon 28%</p>
             </div>
             <div className="flex flex-row justify-center items-baseline">
