@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer"
 import TermsOfService from "@/components/termsofservice"
 
 export const metadata = {
@@ -7,7 +8,10 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <TermsOfService/>
+    <>
+      <TermsOfService/>
+      <Footer/>
+    </>
   )
 }
 

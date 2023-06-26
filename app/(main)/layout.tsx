@@ -11,7 +11,6 @@ const Layout = ({children}: LayoutProps) => {
       <Navbar isHome={false}/>
       <div className="pt-16">
         {children}
-        <Footer/>
       </div>
     </>
   )

@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer"
 import PrivacyPolicy from "@/components/privacypolicy"
 
 export const metadata = {
@@ -7,7 +8,10 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <PrivacyPolicy/>
+    <>
+      <PrivacyPolicy/>
+      <Footer/>
+    </>
   )
 }
 
