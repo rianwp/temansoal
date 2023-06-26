@@ -39,21 +39,35 @@ const BuatSoal = () => {
       mapel,
       haveOptions,
       tingkatKesulitan,
-      topik
+      topik,
+      jumlahSoal: jumlahSoal[0]
     }
     
     if(mapel !== ""){
       const arraySoal: Array<soal> = []
       setIsGenarting(true)
       try {
-        for(const i in [...Array(jumlah)]){
-          const buatSoal = httpsCallable(functions, "buatsoal")
-          const res = await buatSoal(dataInput)
-          const dataResult = res.data as { data: soal }
-          const dataSoal: soal = dataResult.data
-          dataSoal.mapel = dataInput.mapel
-          arraySoal.push(dataSoal)
-        }
+        // for(const i in [...Array(jumlah)]){
+        //   const buatSoal = httpsCallable(functions, "buatsoal")
+        //   const res = await buatSoal(dataInput)
+        //   const dataResult = res.data as { data: soal }
+        //   const dataSoal: soal = dataResult.data
+        //   dataSoal.mapel = dataInput.mapel
+        //   arraySoal.push(dataSoal)
+        // }
+        const buatSoal = httpsCallable(functions, "buatsoal")
+        const res = await buatSoal(dataInput)
+        const dataResult = res.data as { data: soal[]}
+        const dataSoal: soal[] = dataResult.data
+        dataSoal.map((item) => {
+          arraySoal.push({
+            jawaban: item.jawaban,
+            mapel: dataInput.mapel,
+            pembahasan: item.pembahasan,
+            soal: item.soal,
+            pilihan: item.pilihan
+          })
+        })
         await mutateAsync(jumlah)
         if(!isLoading){
           setCurrentUsage((currVal) => currVal + jumlah)
