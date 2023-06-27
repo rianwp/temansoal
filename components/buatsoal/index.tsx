@@ -3,7 +3,7 @@
 import FilterForm from "@/components/buatsoal/FilterForm"
 import SoalCard from "@/components/buatsoal/SoalCard"
 import { Separator } from "@/components/ui/separator"
-import { currentUsageState, haveOptionsState, isGenerateSoalClickedState, isGeneratingSoalState, jumlahSoalState, mataPelajaranState, tingkatKesulitanState, topikState } from "@/lib/state"
+import { currentUsageState, haveOptionsState, isGenerateSoalClickedState, isGeneratingSoalState, jumlahSoalState, mataPelajaranState, soalState, tingkatKesulitanState, topikState } from "@/lib/state"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useState } from "react"
 import soal from "@/types/soal"
@@ -22,7 +22,7 @@ const BuatSoal = () => {
   const haveOptions = useRecoilValue<boolean>(haveOptionsState)
   const tingkatKesulitan = useRecoilValue<string>(tingkatKesulitanState)
   const topik = useRecoilValue<string>(topikState)
-  const [soal, setSoal] = useState<soal[]>()
+  const [soal, setSoal] = useRecoilState<soal[]>(soalState)
   const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
   const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
   
@@ -99,7 +99,7 @@ const BuatSoal = () => {
   return (
     <div className="flex flex-row w-full md:flex-nowrap flex-wrap md:justify-start justify-center">
       <div className="md:fixed flex flex-row w-full md:w-auto">
-        <div className="md:screen-height md:w-auto w-full overflow-y-auto">
+        <div className="md:screen-height md:w-auto w-full overflow-y-auto max-h-[calc(100vh-4rem)]">
           <FilterForm onClick={generateSoal}/>
         </div>
         <Separator className="screen-height md:block hidden" orientation="vertical"/>

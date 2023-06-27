@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil"
-import soalTersimpan from "@/types/soalTersimpan"
+import soal from "@/types/soal"
 
 export const mataPelajaranState = atom({
   key: "mataPelajaranState",
@@ -54,4 +54,9 @@ export const isGeneratingSoalState = atom({
 export const isLimitBarFirstCallState = atom({
   key: "isLimitBarFirstCallState",
   default: true,
+})
+
+export const soalState = atom<soal[]>({
+  key: "soalState",
+  default: []
 })
