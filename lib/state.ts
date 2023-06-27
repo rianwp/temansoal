@@ -55,8 +55,3 @@ export const isLimitBarFirstCallState = atom({
   key: "isLimitBarFirstCallState",
   default: true,
 })
-
-export const soalState = atom<soal[]>({
-  key: "soalState",
-  default: []
-})

@@ -3,7 +3,7 @@
 import FilterForm from "@/components/buatsoal/FilterForm"
 import SoalCard from "@/components/buatsoal/SoalCard"
 import { Separator } from "@/components/ui/separator"
-import { currentUsageState, haveOptionsState, isGenerateSoalClickedState, isGeneratingSoalState, jumlahSoalState, mataPelajaranState, soalState, tingkatKesulitanState, topikState } from "@/lib/state"
+import { currentUsageState, haveOptionsState, isGenerateSoalClickedState, isGeneratingSoalState, jumlahSoalState, mataPelajaranState, tingkatKesulitanState, topikState } from "@/lib/state"
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil"
 import { useState } from "react"
 import soal from "@/types/soal"
@@ -22,7 +22,7 @@ const BuatSoal = () => {
   const haveOptions = useRecoilValue<boolean>(haveOptionsState)
   const tingkatKesulitan = useRecoilValue<string>(tingkatKesulitanState)
   const topik = useRecoilValue<string>(topikState)
-  const [soal, setSoal] = useRecoilState<soal[]>(soalState)
+  const [soal, setSoal] = useState<soal[]>()
   const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
   const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
   
