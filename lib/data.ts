@@ -142,7 +142,7 @@ export const jenisSoal = [
 export const faq = [
   {
     judul: "Apa itu Teman Soal?",
-    deskripsi: "Dengan dukungan artificial intelligence ChatGPT, buat soal menjadi secepat kilat."
+    deskripsi: "Teman Soal adalah website penyedia layanan buat soal dengan bantuan artificial intelligence dari chatGPT. Website Teman Soal juga berperan aktif dalam memberikan layanan yang prima, sehingga minim terjadinya masalah ketika digunakan."
   },
   {
     judul: "Apa jenis materi pelajaran yang tersedia di Teman Soal?",

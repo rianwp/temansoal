@@ -10,9 +10,9 @@ const ItemsKeunggulan = ({icon, judul, deskripsi}: ItemsKeunggulanProps) => {
     <div className="flex flex-col space-y-2 w-full">
       <div className="flex flex-row space-x-2 items-center">
         {icon}
-        <p className="text-lg font-semibold">{judul}</p>
+        <p className="text-base font-semibold">{judul}</p>
       </div>
-      <div className="w-full text-left">
+      <div className="w-full text-left text-sm">
         {deskripsi}
       </div>
     </div>
