@@ -13,6 +13,7 @@ import { functions } from "@/services/firebase"
 import { httpsCallable } from "firebase/functions"
 import { postFetcher } from "@/lib/fetcher"
 import { useMutation } from "@tanstack/react-query"
+import { motion } from "framer-motion"
 
 const BuatSoal = () => {
   const { toast } = useToast()
@@ -95,7 +96,7 @@ const BuatSoal = () => {
       }
     }
   }
-
+  
   return (
     <div className="flex flex-row w-full md:flex-nowrap flex-wrap md:justify-start justify-center">
       <div className="md:fixed flex flex-row w-full md:w-auto">
@@ -111,8 +112,7 @@ const BuatSoal = () => {
           ))
           :
           soal?.map((item, index) => (
-            <SoalCard
-              key={index}
+            <SoalCard key={index}
               jawaban={item.jawaban}
               pilihan={item.pilihan}
               soal={item.soal}
