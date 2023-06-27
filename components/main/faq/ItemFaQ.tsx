@@ -23,7 +23,7 @@ const ItemFaQ = ({urutan, judul, deskripsi}: ItemFaQProps) => {
     >
       <AccordionItem value={`value-${urutan}`}>
         <AccordionTrigger className="text-left">{judul}</AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="text-base font-light">
           {deskripsi}
         </AccordionContent>
       </AccordionItem>

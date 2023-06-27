@@ -25,7 +25,7 @@ const ItemDeskripsi = ({icon, judul, deskripsi}: ItemDeskripsiProps) => {
         {icon}
         <p className="text-base font-semibold">{judul}</p>
       </div>
-      <div className="w-full text-left text-sm">
+      <div className="w-full text-left text-base font-light">
         {deskripsi}
       </div>
     </motion.div>
