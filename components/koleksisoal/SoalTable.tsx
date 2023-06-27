@@ -55,7 +55,6 @@ const SoalTable = () => {
                   <p className="whitespace-nowrap">Tidak ada Data</p>
                 </TableCell>
               </TableRow>
-              
             :
             <TableSkeleton/>
           }
