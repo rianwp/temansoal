@@ -10,8 +10,8 @@ interface ItemDeskripsiProps {
 
 const ItemDeskripsi = ({icon, judul, deskripsi}: ItemDeskripsiProps) => {
   const animate = {
-    initial: { opacity: 0, x: 40},
-    in: { opacity: 1, x: 0}
+    initial: { opacity: 0, y: -20, scale: 0.5},
+    in: { opacity: 1, y: 0, scale: 1}
   }
   return (
     <motion.div
