@@ -33,8 +33,8 @@ export const POST = async (req: NextRequest) => {
         package: true
       }
     })
-
-    const expiredAt = transaction?.package.code === "premium_monthly" ? new Date(new Date().setMonth(new Date().getMonth() + 1)) : new Date()
+    const currentDate = new Date()
+    const expiredDate = new Date(currentDate.setDate(currentDate.getDate() + transaction!.package?.expireTime))
     await prisma.transaction.update({
       where: {
         id: order_id,
@@ -45,7 +45,7 @@ export const POST = async (req: NextRequest) => {
         gross_amount: Number(gross_amount),
         updatedAt: new Date(),
         payment_type: payment_type,
-        expired_at: transaction_status === "capture" || transaction_status === "settlement" ? expiredAt : null,
+        expired_at: transaction_status === "capture" || transaction_status === "settlement" ? expiredDate : null,
         is_active: transaction_status === "capture" || transaction_status === "settlement" ? true : false
       }
     })

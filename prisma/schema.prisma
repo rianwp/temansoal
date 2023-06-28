@@ -92,6 +92,7 @@ model Package {
   price       Int
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
+  expireTime  Int           @default(0)
   Transaction Transaction[]
 }
 
