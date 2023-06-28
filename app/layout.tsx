@@ -18,7 +18,7 @@ const RootLayout = ({children}: RootLayoutProps) => {
   return (
     <Provider>
       <html lang="en">
-        <body className={`${font.className} overflow-y-hidden`}>
+        <body className={`${font.className} overflow-x-hidden`}>
           {children}
           <Toaster/>
         </body>
