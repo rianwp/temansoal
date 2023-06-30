@@ -3,7 +3,7 @@
 @tailwind utilities;
  
 .hero-responsive{
-  @apply lg:h-[700px] md:h-[600px] h-[500px];
+  @apply lg:min-h-[700px] md:min-h-[600px] min-h-[500px];
 }
 .screen-height{
   @apply h-[calc(100vh-4rem)];
