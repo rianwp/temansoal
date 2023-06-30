@@ -3,9 +3,6 @@ import crypto from "crypto"
 import { prisma } from "@/lib/db"
 
 export const POST = async (req: NextRequest) => {
-  if (req.method !== "POST") {
-    return NextResponse.json({ message: "Method not allowed" }, { status: 500 })
-  }
   try {
     const { signature_key, order_id, payment_type, gross_amount, status_code, transaction_status } = await req.json()
     const verifySignature = crypto.createHash('sha512').update(`${order_id}${status_code}${gross_amount}${process.env.MIDTRANS_SERVER_KEY}`).digest("hex")
