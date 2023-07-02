@@ -12,9 +12,8 @@ import { getFetcher } from "@/lib/fetcher"
 import { Loader2 } from "lucide-react"
 
 const PricingFree = () => {
-  const { data: session, status } = useSession()
-  const isSessionLoading = status === "loading"
-  const { data: accountStatus } = useQuery({
+  const { data: session } = useSession()
+  const { data: accountStatus, isLoading: isSessionLoading } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
       getFetcher("/api/accountstatus")

@@ -12,8 +12,7 @@ import { useSession } from "next-auth/react"
 import { Loader2 } from "lucide-react"
 
 const PricingPremium = () => {
-  const { data: session, status } = useSession()
-  const isSessionLoading = status === "loading"
+  const { data: session } = useSession()
   const { toast } = useToast()
   const { isLoading, isError, data: requestTransaction, mutateAsync } = useMutation({
     mutationKey: ["requestTransaction"],
@@ -22,7 +21,7 @@ const PricingPremium = () => {
       window.open(data.redirectUrl, "_blank")
     },
   })
-  const { data: accountStatus } = useQuery({
+  const { data: accountStatus, isLoading: isSessionLoading } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
       getFetcher("/api/accountstatus")
