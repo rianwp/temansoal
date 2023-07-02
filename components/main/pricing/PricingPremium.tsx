@@ -9,9 +9,11 @@ import { getFetcher, postFetcher } from "@/lib/fetcher"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
+import { Loader2 } from "lucide-react"
 
 const PricingPremium = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const isSessionLoading = status === "loading"
   const { toast } = useToast()
   const { isLoading, isError, data: requestTransaction, mutateAsync } = useMutation({
     mutationKey: ["requestTransaction"],
@@ -58,15 +60,20 @@ const PricingPremium = () => {
               <p className="text-xs">/bln</p>
             </div>
           </div>
-          {session?.user ?
-            isPremium ?
-              <PricingButton disabled={true}>Aktif</PricingButton>
-              :
-              <PricingButton onClick={handleTransaction} disabled={isLoading}>Beli</PricingButton>
+          {isSessionLoading ?
+            <PricingButton disabled={true}>
+              <Loader2 className="h-5 w-5 animate-spin text-white" />
+            </PricingButton>
             :
-            <Link className="w-full" href="/login">
-              <PricingButton>Beli</PricingButton>
-            </Link>
+            session?.user ?
+              isPremium ?
+                <PricingButton disabled={true}>Aktif</PricingButton>
+                :
+                <PricingButton onClick={handleTransaction} disabled={isLoading}>Beli</PricingButton>
+              :
+              <Link className="w-full" href="/login">
+                <PricingButton>Beli</PricingButton>
+              </Link>
           }
         </div>
         <Separator/>

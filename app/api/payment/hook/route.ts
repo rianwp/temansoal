@@ -31,7 +31,7 @@ export const POST = async (req: NextRequest) => {
       }
     })
     const currentDate = new Date()
-    const expiredDate = new Date(currentDate.setDate(currentDate.getDate() + transaction!.package?.expireTime))
+    const expiredDate = new Date(currentDate.setDate(currentDate.getDate() + transaction!.package?.expireTime)) //need to fix logic, every transaction success update expire time in user
     await prisma.transaction.update({
       where: {
         id: order_id,

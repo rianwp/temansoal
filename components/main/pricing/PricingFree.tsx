@@ -9,9 +9,11 @@ import PricingButton from "./PricingButton"
 import { useSession } from "next-auth/react"
 import { useQuery } from "@tanstack/react-query"
 import { getFetcher } from "@/lib/fetcher"
+import { Loader2 } from "lucide-react"
 
 const PricingFree = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
+  const isSessionLoading = status === "loading"
   const { data: accountStatus } = useQuery({
     queryKey: ["accountStatus"],
     queryFn: () =>
@@ -35,15 +37,20 @@ const PricingFree = () => {
               <p className="text-2xl font-bold">0</p>
             </div>
           </div>
-          {session?.user ?
-            isPremium ? 
-              <PricingButton disabled={true}>Sign Up</PricingButton>
-              :
-              <PricingButton disabled={true}>Aktif</PricingButton>
+          {isSessionLoading ?
+            <PricingButton disabled={true}>
+              <Loader2 className="h-5 w-5 animate-spin text-white" />
+            </PricingButton>
             :
-            <Link className="w-full" href="/login">
-              <PricingButton>Sign Up</PricingButton>
-            </Link>
+            session?.user ?
+              isPremium ? 
+                <PricingButton disabled={true}>Sign Up</PricingButton>
+                :
+                <PricingButton disabled={true}>Aktif</PricingButton>
+              :
+              <Link className="w-full" href="/login">
+                <PricingButton>Sign Up</PricingButton>
+              </Link>
           }
         </div>
         <Separator/>
