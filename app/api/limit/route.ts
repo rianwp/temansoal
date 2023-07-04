@@ -8,9 +8,21 @@ export const POST = async (req: Request) => {
   if(userSession?.user?.email) {
     try {
       const { jumlahSoal } = (await req.json()) as { jumlahSoal: number }
+      const transaction = await prisma.transaction.findMany({
+        where: {
+          user: {
+            email: userSession.user.email
+          },
+          is_active: true,
+          expired_at: {
+            gte: new Date()
+          }
+        }
+      })
       await prisma.soalDibuat.create({
         data: {
           total: jumlahSoal,
+          isPremium: transaction && transaction.length > 0,
           user: {
             connect: {
               email: userSession.user.email
@@ -74,6 +86,7 @@ export const GET = async (req: Request) => {
             user: {
               email: userSession.user.email
             },
+            isPremium: false,
             createdAt: {
               gte: new Date(new Date().setHours(0, 0, 0, 0)),
               lte: new Date(new Date().setHours(23, 59, 59, 999))
