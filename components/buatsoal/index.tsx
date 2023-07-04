@@ -11,9 +11,8 @@ import { useToast } from "@/components/ui/use-toast"
 import SoalCardSkeleton from "@/components/buatsoal/SoalCardSkeleton"
 import { functions } from "@/services/firebase"
 import { httpsCallable } from "firebase/functions"
-import { postFetcher } from "@/lib/fetcher"
-import { useMutation } from "@tanstack/react-query"
-import { motion } from "framer-motion"
+import { getFetcher, postFetcher } from "@/lib/fetcher"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
 const BuatSoal = () => {
   const { toast } = useToast()
@@ -27,11 +26,17 @@ const BuatSoal = () => {
   const [isGenerating, setIsGenarting] = useRecoilState<boolean>(isGeneratingSoalState)
   const setCurrentUsage = useSetRecoilState<number>(currentUsageState)
   
-  const { isLoading, isError, data: updateLimit, mutateAsync } = useMutation({
+  const { isLoading: isLimitLoading, isError: isLimitError, data: updateLimit, mutateAsync } = useMutation({
     mutationKey: ["updateLimit"],
     mutationFn: (jumlah: number) =>
       postFetcher("/api/limit", { jumlahSoal: jumlah })
   })
+  const { data: accountStatus, isLoading: isSessionLoading } = useQuery({
+    queryKey: ["accountStatus"],
+    queryFn: () =>
+      getFetcher("/api/accountstatus")
+  })
+  const isPremium = accountStatus?.isPremium ? true : false
 
   const generateSoal = async () => {
     const jumlah = jumlahSoal[0]
@@ -70,12 +75,14 @@ const BuatSoal = () => {
           })
         })
         await mutateAsync(jumlah)
-        if(!isLoading){
-          setCurrentUsage((currVal) => currVal + jumlah)
+        if(!isLimitLoading && !isSessionLoading){
+          if(!isPremium){
+            setCurrentUsage((currVal) => currVal + jumlah)
+          }
           setSoal(arraySoal)
           setIsGenarting(false)
           setIsGenerateSoalClicked(false)
-          if(isError){
+          if(isLimitError){
             setIsGenarting(false)
             setIsGenerateSoalClicked(false)
             toast({
