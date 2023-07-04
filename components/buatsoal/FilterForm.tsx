@@ -1,4 +1,4 @@
-import { currentUsageState, isGenerateSoalClickedState, isGeneratingSoalState, isLimitBarFirstCallState, mataPelajaranState } from "@/lib/state"
+import { currentUsageState, isGenerateSoalClickedState, isGeneratingSoalState, isLimitBarFirstCallState, jumlahSoalState, mataPelajaranState } from "@/lib/state"
 import FormMataPelajaran from "./FormMataPelajaran"
 import LimitBar from "./LimitBar"
 import { useRecoilState, useRecoilValue } from "recoil"
@@ -20,6 +20,7 @@ interface FilterFormProps {
 const FilterForm = ({onClick}: FilterFormProps) => {
   const { toast } = useToast()
   const mapel = useRecoilValue<string>(mataPelajaranState)
+  const jumlahSoal = useRecoilValue<number[]>(jumlahSoalState)
   const isGenerating = useRecoilValue<boolean>(isGeneratingSoalState)
   const currentUsage = useRecoilValue<number>(currentUsageState)
   const isGenerateSoalClicked = useRecoilValue<boolean>(isGenerateSoalClickedState)
@@ -41,10 +42,10 @@ const FilterForm = ({onClick}: FilterFormProps) => {
   const handleClick = () => {
     if(!isGenerating) {
       if(currentUsageInitial?.isLimit){
-        if(currentUsageInitial?.total >= 20 || currentUsage >= 20){
+        if(currentUsageInitial?.total >= 20 || currentUsage >= 20 || currentUsageInitial.total + jumlahSoal[0] > 20 || currentUsage + jumlahSoal[0] > 20){
           toast({
             variant: "default",
-            title: "Kamu Sudah Mencapai Limit",
+            title: "Kamu Mencapai Limit",
             description: "Coba Lagi Besok atau Upgrade ke Premium",
           })
         } else{
