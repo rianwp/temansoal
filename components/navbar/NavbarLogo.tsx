@@ -11,8 +11,10 @@ const NavbarLogo = ({onTop}: NavbarLogoProps) => {
   const colorLogo = onTop ? "hidden" : "block"
   return (
     <Link href="/" className="flex flex-row justify-between items-center space-x-2">
+      <div>
         <Image className={whiteLogo} src="/logowhite.png" alt="Logo" width={32} height={24}/>
         <Image className={colorLogo} src="/logo.png" alt="Logo" width={32} height={24}/>
+      </div>
       <p className={`${textStyle} font-medium text-base`}>Teman Soal</p>
     </Link>
   )
