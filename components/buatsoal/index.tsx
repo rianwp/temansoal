@@ -61,7 +61,7 @@ const BuatSoal = () => {
         //   dataSoal.mapel = dataInput.mapel
         //   arraySoal.push(dataSoal)
         // }
-        const buatSoal = httpsCallable(functions, "buatsoal")
+        const buatSoal = httpsCallable(functions, "buatsoal", { timeout: 300000 })
         const res = await buatSoal(dataInput)
         const dataResult = res.data as { data: soal[]}
         const dataSoal: soal[] = dataResult.data
