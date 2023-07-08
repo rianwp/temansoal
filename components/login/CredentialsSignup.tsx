@@ -119,7 +119,7 @@ const CredentialsSignup = () => {
           null
         }
         <div className="flex flex-row space-x-2 pt-1 pb-3">
-          <Checkbox id="checbox" onClick={() => setShowPassword(!showPassword)} />
+          <Checkbox id="checkbox" onClick={() => setShowPassword(!showPassword)} />
           <label htmlFor="checkbox" className="text-sm">Tampilkan Password</label>
         </div>
       </div>
